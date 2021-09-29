@@ -1,0 +1,21 @@
+{
+    "SendQueueName": "ACSBridgeQueue",
+    "RecvQueueName": "MESQueue",
+    "ErrQueueName": "MESQueue",
+    "SendQueueIP": "tcp:192.168.0.85",
+    "RecvQueueIP": "tcp:192.168.0.93",
+    "ErrQueueIP": "tcp:192.168.0.93",
+    "IP": "192.168.0.85",
+    "STK_List": {
+        "E003": "",
+        "E004": "",
+        "E002": ""
+    },
+    "e82_ip": "192.168.0.85",
+    "e82_port": 5000,
+    "e88_ip": "192.168.0.85",
+    "e88_port": 5001,
+    "STK_format": "{Device}-{Port}",
+    "EQP_format": "{Device}",
+    "EmptyCarrier": "No"
+}
