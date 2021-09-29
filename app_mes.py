@@ -728,91 +728,91 @@ def send_batch_function():
     print(batch_stkmove_data_frame)
     batch_stkmove_data_frame['strFROMPORT'] = batch_stkmove_data_frame['strFROMPORT'].apply(lambda x : '{:0>2d}'.format(x))
     print(batch_stkmove_data_frame['strFROMPORT'])
-    for batch_stkmove_data_frame_index in range(len(batch_stkmove_data_frame)):
-        send_batch_dict={}
-        send_batch_dict_key="stkmove_batch_"+str(batch_stkmove_data_frame_index)
-        print("strCARRIERTYPE:"+str(batch_stkmove_data_frame['strCARRIERTYPE'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strCARRIERTYPE']=str(batch_stkmove_data_frame['strCARRIERTYPE'][batch_stkmove_data_frame_index])
-        print("strCOMMANDID:"+str(batch_stkmove_data_frame['strCOMMANDID'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strCOMMANDID']=str(batch_stkmove_data_frame['strCOMMANDID'][batch_stkmove_data_frame_index])
-        print("strUSERID:"+str(batch_stkmove_data_frame['strUSERID'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strUSERID']=str(batch_stkmove_data_frame['strUSERID'][batch_stkmove_data_frame_index])
-        print("strCARRIERID:"+str(batch_stkmove_data_frame['strCARRIERID'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strCARRIERID']=str(batch_stkmove_data_frame['strCARRIERID'][batch_stkmove_data_frame_index])
-        print("strFROMDEVICE:"+str(batch_stkmove_data_frame['strFROMDEVICE'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strFROMDEVICE']=str(batch_stkmove_data_frame['strFROMDEVICE'][batch_stkmove_data_frame_index])
-        print("strFROMPORT:"+'{:0>2}'.format(str(batch_stkmove_data_frame['strFROMPORT'][batch_stkmove_data_frame_index])))
-        #send_batch_dict['strFROMPORT']=str(batch_stkmove_data_frame['strFROMPORT'][batch_stkmove_data_frame_index])
-        print("strTODEVICE:"+str(batch_stkmove_data_frame['strTODEVICE'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strTODEVICE']=str(batch_stkmove_data_frame['strTODEVICE'][batch_stkmove_data_frame_index])
-        print("strTOPORT:"+str(batch_stkmove_data_frame['strTOPORT'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strTOPORT']=str(batch_stkmove_data_frame['strTOPORT'][batch_stkmove_data_frame_index])
-        print("strEMPTYCARRIER:"+str(batch_stkmove_data_frame['strEMPTYCARRIER'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strEMPTYCARRIER']=str(batch_stkmove_data_frame['strEMPTYCARRIER'][batch_stkmove_data_frame_index])
-        print("strPRIORITY:"+str(batch_stkmove_data_frame['strPRIORITY'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strPRIORITY']=str(batch_stkmove_data_frame['strPRIORITY'][batch_stkmove_data_frame_index])
-        print("strCMD:"+str(batch_stkmove_data_frame['strCMD'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strCMD']=str(batch_stkmove_data_frame['strCMD'][batch_stkmove_data_frame_index])
-        print("strMETHODNAME:"+str(batch_stkmove_data_frame['strMETHODNAME'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strMETHODNAME']=str(batch_stkmove_data_frame['strMETHODNAME'][batch_stkmove_data_frame_index])
-        print("strFORMNAME:"+str(batch_stkmove_data_frame['strFORMNAME'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strFORMNAME']=str(batch_stkmove_data_frame['strFORMNAME'][batch_stkmove_data_frame_index])
-        print("function is send")
-        if((str(batch_stkmove_data_frame['strMETHODNAME'][batch_stkmove_data_frame_index]))=="STKMOVE"):
-            print("function is stkmove")
-            STKMOVE_xml_data = STKMOVE.format(
-                IP=SendQueueIP,
-                QUEUE_NAME=SendQueueName,
-                CLIENT_HOSTNAME=HostName,
-                FUNCTION_VERSION=Version,
-                PROCESS_ID=PID,
-                TIMESTAMP=Time,
-                COMMANDID=str(batch_stkmove_data_frame['strCOMMANDID'][batch_stkmove_data_frame_index]),
-                USERID=str(batch_stkmove_data_frame['strUSERID'][batch_stkmove_data_frame_index]),
-                CARRIERID=str(batch_stkmove_data_frame['strCARRIERID'][batch_stkmove_data_frame_index]),
-                FROMDEVICE=str(batch_stkmove_data_frame['strFROMDEVICE'][batch_stkmove_data_frame_index]),
-                FROMPORT=str(batch_stkmove_data_frame['strFROMPORT'][batch_stkmove_data_frame_index]),
-                TODEVICE=str(batch_stkmove_data_frame['strTODEVICE'][batch_stkmove_data_frame_index]),
-                TOPORT=str(batch_stkmove_data_frame['strTOPORT'][batch_stkmove_data_frame_index]),
-                EMPTYCARRIER=str(batch_stkmove_data_frame['strEMPTYCARRIER'][batch_stkmove_data_frame_index]),
-                PRIORITY=str(batch_stkmove_data_frame['strPRIORITY'][batch_stkmove_data_frame_index]))
-            print(STKMOVE_xml_data)
-            send_batch_dict["status_of_send"] = send_batch_dict
-            send_batch_dict["send_message_label"] = "STKMOVE"
-            send_batch_dict["send_message_body"] = STKMOVE_xml_data
-            if(send_batch_dict["send_message_body"][0] == "<"):
-                root_send = etree.fromstring(send_batch_dict["send_message_body"])
-                if(len(root_send[1]) > 1):
-                    if(len(root_send[1][-1]) >= 1):
-                        if(root_send[1][-1][0].text =="STKMOVE"):
-                            if(str(root_send[1][-1][0].text) == "STKMOVE"):
-                                send_batch_dict["send_CLIENT_HOSTNAME"] = root_send[0][0].text
-                                send_batch_dict["send_FUNCTION"] = root_send[0][1].text
-                                send_batch_dict["send_SERVERNAME"] = root_send[0][2].text
-                                send_batch_dict["send_IP"] = root_send[0][3].text
-                                send_batch_dict["send_DLL_NAME"] = root_send[0][4].text
-                                send_batch_dict["send_FUNCTION_VERSION"] = root_send[0][5].text
-                                send_batch_dict["send_CLASSNAME"] = root_send[0][6].text
-                                send_batch_dict["send_PROCESS_ID"] = root_send[0][7].text
-                                send_batch_dict["send_QUEUE_NAME"] = root_send[0][8].text
-                                send_batch_dict["send_LANG"] = root_send[0][9].text
-                                send_batch_dict["send_TIMESTAMP"] = root_send[0][10].text
-                                send_batch_dict["send_strCOMMANDID"] = root_send[1][0].text
-                                send_batch_dict["send_strUSERID"] = root_send[1][1].text
-                                send_batch_dict["send_strCARRIERID"] = root_send[1][2].text
-                                send_batch_dict["send_strCARRIERIDTYPE"] = root_send[1][3].text
-                                send_batch_dict["send_strFROMDEVICE"] = root_send[1][4].text
-                                send_batch_dict["send_strFROMPORT"] = root_send[1][5].text
-                                send_batch_dict["send_strTODEVICE"] = root_send[1][6].text
-                                send_batch_dict["send_strTOPORT"] = root_send[1][7].text
-                                send_batch_dict["send_strEMPTYCARRIER"] = root_send[1][8].text
-                                send_batch_dict["send_strPRIORITY"] = root_send[1][9].text
-                                send_batch_dict["send_strMETHODNAME"] = root_send[1][-1][0].text
-                                send_batch_dict["send_strFORNAME"] = root_send[1][-1][1].text
-                                send_batch_dict["send_strCMD"] = root_send[1][-1][2].text
-        send_batch_all_dict[send_batch_dict_key]=send_batch_dict
-        print("delay:"+str(batch_stkmove_data_frame['delay'][batch_stkmove_data_frame_index])+"second")
-        time.sleep(batch_stkmove_data_frame['delay'][batch_stkmove_data_frame_index])
+    send_batch_dict={}
+    send_batch_dict_key="stkmove_batch_"+str("0")
+    print("strCARRIERTYPE:"+str(batch_stkmove_data_frame['strCARRIERTYPE'][0]))
+    #send_batch_dict['strCARRIERTYPE']=str(batch_stkmove_data_frame['strCARRIERTYPE'][0])
+    print("strCOMMANDID:"+str(batch_stkmove_data_frame['strCOMMANDID'][0]))
+    #send_batch_dict['strCOMMANDID']=str(batch_stkmove_data_frame['strCOMMANDID'][0])
+    print("strUSERID:"+str(batch_stkmove_data_frame['strUSERID'][0]))
+    #send_batch_dict['strUSERID']=str(batch_stkmove_data_frame['strUSERID'][0])
+    print("strCARRIERID:"+str(batch_stkmove_data_frame['strCARRIERID'][0]))
+    #send_batch_dict['strCARRIERID']=str(batch_stkmove_data_frame['strCARRIERID'][0])
+    print("strFROMDEVICE:"+str(batch_stkmove_data_frame['strFROMDEVICE'][0]))
+    #send_batch_dict['strFROMDEVICE']=str(batch_stkmove_data_frame['strFROMDEVICE'][0])
+    print("strFROMPORT:"+'{:0>2}'.format(str(batch_stkmove_data_frame['strFROMPORT'][0])))
+    #send_batch_dict['strFROMPORT']=str(batch_stkmove_data_frame['strFROMPORT'][0])
+    print("strTODEVICE:"+str(batch_stkmove_data_frame['strTODEVICE'][0]))
+    #send_batch_dict['strTODEVICE']=str(batch_stkmove_data_frame['strTODEVICE'][0])
+    print("strTOPORT:"+str(batch_stkmove_data_frame['strTOPORT'][0]))
+    #send_batch_dict['strTOPORT']=str(batch_stkmove_data_frame['strTOPORT'][0])
+    print("strEMPTYCARRIER:"+str(batch_stkmove_data_frame['strEMPTYCARRIER'][0]))
+    #send_batch_dict['strEMPTYCARRIER']=str(batch_stkmove_data_frame['strEMPTYCARRIER'][0])
+    print("strPRIORITY:"+str(batch_stkmove_data_frame['strPRIORITY'][0]))
+    #send_batch_dict['strPRIORITY']=str(batch_stkmove_data_frame['strPRIORITY'][0])
+    print("strCMD:"+str(batch_stkmove_data_frame['strCMD'][0]))
+    #send_batch_dict['strCMD']=str(batch_stkmove_data_frame['strCMD'][0])
+    print("strMETHODNAME:"+str(batch_stkmove_data_frame['strMETHODNAME'][0]))
+    #send_batch_dict['strMETHODNAME']=str(batch_stkmove_data_frame['strMETHODNAME'][0])
+    print("strFORMNAME:"+str(batch_stkmove_data_frame['strFORMNAME'][0]))
+    #send_batch_dict['strFORMNAME']=str(batch_stkmove_data_frame['strFORMNAME'][0])
+    print("function is send")
+    if((str(batch_stkmove_data_frame['strMETHODNAME'][0]))=="STKMOVE"):
+        print("function is stkmove")
+        STKMOVE_xml_data = STKMOVE.format(
+            IP=SendQueueIP,
+            QUEUE_NAME=SendQueueName,
+            CLIENT_HOSTNAME=HostName,
+            FUNCTION_VERSION=Version,
+            PROCESS_ID=PID,
+            TIMESTAMP=Time,
+            COMMANDID=str(batch_stkmove_data_frame['strCOMMANDID'][0]),
+            USERID=str(batch_stkmove_data_frame['strUSERID'][0]),
+            CARRIERID=str(batch_stkmove_data_frame['strCARRIERID'][0]),
+            FROMDEVICE=str(batch_stkmove_data_frame['strFROMDEVICE'][0]),
+            FROMPORT=str(batch_stkmove_data_frame['strFROMPORT'][0]),
+            TODEVICE=str(batch_stkmove_data_frame['strTODEVICE'][0]),
+            TOPORT=str(batch_stkmove_data_frame['strTOPORT'][0]),
+            EMPTYCARRIER=str(batch_stkmove_data_frame['strEMPTYCARRIER'][0]),
+            PRIORITY=str(batch_stkmove_data_frame['strPRIORITY'][0]))
+        print(STKMOVE_xml_data)
+        status_of_send = send_msmaq("STKMOVE", STKMOVE_xml_data)  # here
+        send_batch_dict["status_of_send"] = status_of_send
+        send_batch_dict["send_message_label"] = "STKMOVE"
+        send_batch_dict["send_message_body"] = STKMOVE_xml_data
+        if(send_batch_dict["send_message_body"][0] == "<"):
+            root_send = etree.fromstring(send_batch_dict["send_message_body"])
+            if(len(root_send[1]) > 1):
+                if(len(root_send[1][-1]) >= 1):
+                    if(root_send[1][-1][0].text =="STKMOVE"):
+                        if(str(root_send[1][-1][0].text) == "STKMOVE"):
+                            send_batch_dict["send_CLIENT_HOSTNAME"] = root_send[0][0].text
+                            send_batch_dict["send_FUNCTION"] = root_send[0][1].text
+                            send_batch_dict["send_SERVERNAME"] = root_send[0][2].text
+                            send_batch_dict["send_IP"] = root_send[0][3].text
+                            send_batch_dict["send_DLL_NAME"] = root_send[0][4].text
+                            send_batch_dict["send_FUNCTION_VERSION"] = root_send[0][5].text
+                            send_batch_dict["send_CLASSNAME"] = root_send[0][6].text
+                            send_batch_dict["send_PROCESS_ID"] = root_send[0][7].text
+                            send_batch_dict["send_QUEUE_NAME"] = root_send[0][8].text
+                            send_batch_dict["send_LANG"] = root_send[0][9].text
+                            send_batch_dict["send_TIMESTAMP"] = root_send[0][10].text
+                            send_batch_dict["send_strCOMMANDID"] = root_send[1][0].text
+                            send_batch_dict["send_strUSERID"] = root_send[1][1].text
+                            send_batch_dict["send_strCARRIERID"] = root_send[1][2].text
+                            send_batch_dict["send_strCARRIERIDTYPE"] = root_send[1][3].text
+                            send_batch_dict["send_strFROMDEVICE"] = root_send[1][4].text
+                            send_batch_dict["send_strFROMPORT"] = root_send[1][5].text
+                            send_batch_dict["send_strTODEVICE"] = root_send[1][6].text
+                            send_batch_dict["send_strTOPORT"] = root_send[1][7].text
+                            send_batch_dict["send_strEMPTYCARRIER"] = root_send[1][8].text
+                            send_batch_dict["send_strPRIORITY"] = root_send[1][9].text
+                            send_batch_dict["send_strMETHODNAME"] = root_send[1][-1][0].text
+                            send_batch_dict["send_strFORNAME"] = root_send[1][-1][1].text
+                            send_batch_dict["send_strCMD"] = root_send[1][-1][2].text
+    send_batch_all_dict[send_batch_dict_key]=send_batch_dict
+    #print("delay:"+str(batch_stkmove_data_frame['delay'][0])+"second")
+    #time.sleep(batch_stkmove_data_frame['delay'][0])
     return jsonify(send_batch_all_dict)
 
 
