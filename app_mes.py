@@ -1608,7 +1608,7 @@ def receive_function_and_process_function():
                         print(result_recv_data_frame)
                         #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_foupinfo.xlsx")
                         # print(recv_dict_whit_xml)
-                        f = open('example.json', 'r')  
+                        f = open('config.json', 'r')  
                         data = json.load(f)
                         FOUPINFO_R_xml_data = FOUPINFO_R.format(
                             IP=recv_dict["recv_IP"],
