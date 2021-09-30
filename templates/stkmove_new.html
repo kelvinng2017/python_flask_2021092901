@@ -686,6 +686,25 @@
                                 updateLogs(dataList)
 
                                 resdata = ''
+                            } else if (test.length == 1) {
+                                if (test[0].data.stkmove_batch_0 != '') {
+                                    let resendlog = Object.entries(test[0].data)
+
+                                    for (let i = 0; i < resendlog.length; i++) {
+                                        console.log("FIN", resendlog[i][1])
+                                        let resSend = resendlog.find(o => o['send_FUNCTION'])
+
+                                        let resSenddata = {
+                                            "no": dataList.length + 1,
+                                            "data": tryingsend(resSend)
+                                        }
+                                        dataList.push(resSenddata)
+                                        console.log(typeof dataList)
+                                        localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                        updateLogs(dataList)
+                                        resSenddata = ''
+                                    }
+                                }
                             } else if (test.length == 2) {
                                 console.log("TEST2", test)
                                 let resRecv = test.find(o => o['recv_FUNCTION'])
