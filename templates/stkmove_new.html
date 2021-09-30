@@ -346,18 +346,24 @@
                         return result;
                     }
 
-                    let postdata = {
-                        "no": dataList.length + 1,
-                        "data": trying(test)
-                    }
-                    console.log("POSTDATA：", postdata)
-                    console.log("DATALIST：", dataList)
-                    dataList.push(postdata)
-                    console.log(typeof dataList)
-                    localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
-                    updateLogs(dataList)
+                    if (test[0].data.stkmove_batch_0 != '') {
+                        let resendlog = Object.entries(test[0].data)
 
-                    postdata = ''
+                        for (let i = 0; i < resendlog.length; i++) {
+                            console.log("FIN", resendlog[i][1])
+
+                            let postdata = {
+                                "no": dataList.length + 1,
+                                "data": trying(resendlog[i][1])
+                            }
+                            dataList.push(postdata)
+                            console.log(typeof dataList)
+                            localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                            updateLogs(dataList)
+                            postdata = ''
+                        }
+                    }
+
                     idRefresh()
 
                     //console.log(data.length)
@@ -461,26 +467,6 @@
                                 updateLogs(dataList)
 
                                 resdata = ''
-                            } else if (test.length == 1) {
-                                if (test[0].data.stkmove_batch_0 != '') {
-                                    let resendlog = Object.entries(test[0].data)
-                                    console.log("ELSEBATCH", resendlog)
-
-                                    for (let i = 0; i < resendlog.length; i++) {
-                                        console.log("FIN", resendlog[i][1])
-                                        let resSend = resendlog.find(o => o['send_FUNCTION'])
-
-                                        let resSenddata = {
-                                            "no": dataList.length + 1,
-                                            "data": tryingsend(resSend)
-                                        }
-                                        dataList.push(resSenddata)
-                                        console.log(typeof dataList)
-                                        localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
-                                        updateLogs(dataList)
-                                        resSenddata = ''
-                                    }
-                                }
                             } else if (test.length == 2) {
                                 console.log("TEST2", test)
                                 let resRecv = test.find(o => o['recv_FUNCTION'])
