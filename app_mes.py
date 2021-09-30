@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from crypt import methods
 from flask import Flask, render_template, request, redirect, url_for, make_response, Response, jsonify
 import json
 import random as rand
@@ -719,19 +720,19 @@ def send_function():
         return jsonify(send_dict)
     # return jsonify(send_dict)
 @app.route('/send_stkmove_batch_function', methods=["GET", "POST"])
-def send_batch_function():
+def send_stkmove_batch_function():
     timeNow = datetime.datetime.now()  # 讀取系統現在的時間戳
     Time = timeNow.strftime("%Y/%m/%d %H:%M:%S")  # 將時間戳轉爲YYYY/MM/DD HH:mm:SS格式
-    print("i am in send_batch_function")
-    send_batch_all_dict={}
+    print("i am in send_stkmove_batch_function")
+    send_batch_stkmove_all_dict={}
     batch_stkmove_data_frame = pd.read_excel('./batch_excel/stkmove.xlsx')#讀取excel文件
     print(batch_stkmove_data_frame)
     batch_stkmove_data_frame['strFROMPORT'] = batch_stkmove_data_frame['strFROMPORT'].apply(lambda x : '{:0>2d}'.format(x))
-    print(batch_stkmove_data_frame['strFROMPORT'])
+    #print(batch_stkmove_data_frame['strFROMPORT'])
     
     for batch_stkmove_data_frame_index in range(len(batch_stkmove_data_frame)):
-        send_batch_dict={}
-        send_batch_dict_key="stkmove_batch_"+str(batch_stkmove_data_frame_index)
+        send_batch_stkmove_dict={}
+        send_batch_stkmove_dict_key="stkmove_batch_"+str(batch_stkmove_data_frame_index)
         print("strCARRIERTYPE:"+str(batch_stkmove_data_frame['strCARRIERTYPE'][batch_stkmove_data_frame_index]))
         print("strCOMMANDID:"+str(batch_stkmove_data_frame['strCOMMANDID'][batch_stkmove_data_frame_index]))
         print("strUSERID:"+str(batch_stkmove_data_frame['strUSERID'][batch_stkmove_data_frame_index]))
@@ -766,44 +767,133 @@ def send_batch_function():
                 PRIORITY=str(batch_stkmove_data_frame['strPRIORITY'][batch_stkmove_data_frame_index]))
             print(STKMOVE_xml_data)
             status_of_send = send_msmaq("STKMOVE", STKMOVE_xml_data)  # here
-            send_batch_dict["status_of_send"] = status_of_send
-            send_batch_dict["send_message_label"] = "STKMOVE"
-            send_batch_dict["send_message_body"] = STKMOVE_xml_data
-            if(send_batch_dict["send_message_body"][0] == "<"):
-                root_send = etree.fromstring(send_batch_dict["send_message_body"])
+            send_batch_stkmove_dict["status_of_send"] = status_of_send
+            send_batch_stkmove_dict["send_message_label"] = "STKMOVE"
+            send_batch_stkmove_dict["send_message_body"] = STKMOVE_xml_data
+            if(send_batch_stkmove_dict["send_message_body"][0] == "<"):
+                root_send = etree.fromstring(send_batch_stkmove_dict["send_message_body"])
                 if(len(root_send[1]) > 1):
                     if(len(root_send[1][-1]) >= 1):
                         if(root_send[1][-1][0].text =="STKMOVE"):
                             if(str(root_send[1][-1][0].text) == "STKMOVE"):
-                                send_batch_dict["send_CLIENT_HOSTNAME"] = root_send[0][0].text
-                                send_batch_dict["send_FUNCTION"] = root_send[0][1].text
-                                send_batch_dict["send_SERVERNAME"] = root_send[0][2].text
-                                send_batch_dict["send_IP"] = root_send[0][3].text
-                                send_batch_dict["send_DLL_NAME"] = root_send[0][4].text
-                                send_batch_dict["send_FUNCTION_VERSION"] = root_send[0][5].text
-                                send_batch_dict["send_CLASSNAME"] = root_send[0][6].text
-                                send_batch_dict["send_PROCESS_ID"] = root_send[0][7].text
-                                send_batch_dict["send_QUEUE_NAME"] = root_send[0][8].text
-                                send_batch_dict["send_LANG"] = root_send[0][9].text
-                                send_batch_dict["send_TIMESTAMP"] = root_send[0][10].text
-                                send_batch_dict["send_strCOMMANDID"] = root_send[1][0].text
-                                send_batch_dict["send_strUSERID"] = root_send[1][1].text
-                                send_batch_dict["send_strCARRIERID"] = root_send[1][2].text
-                                send_batch_dict["send_strCARRIERIDTYPE"] = root_send[1][3].text
-                                send_batch_dict["send_strFROMDEVICE"] = root_send[1][4].text
-                                send_batch_dict["send_strFROMPORT"] = root_send[1][5].text
-                                send_batch_dict["send_strTODEVICE"] = root_send[1][6].text
-                                send_batch_dict["send_strTOPORT"] = root_send[1][7].text
-                                send_batch_dict["send_strEMPTYCARRIER"] = root_send[1][8].text
-                                send_batch_dict["send_strPRIORITY"] = root_send[1][9].text
-                                send_batch_dict["send_strMETHODNAME"] = root_send[1][-1][0].text
-                                send_batch_dict["send_strFORNAME"] = root_send[1][-1][1].text
-                                send_batch_dict["send_strCMD"] = root_send[1][-1][2].text
-        send_batch_all_dict[send_batch_dict_key]=send_batch_dict
+                                send_batch_stkmove_dict["send_CLIENT_HOSTNAME"] = root_send[0][0].text
+                                send_batch_stkmove_dict["send_FUNCTION"] = root_send[0][1].text
+                                send_batch_stkmove_dict["send_SERVERNAME"] = root_send[0][2].text
+                                send_batch_stkmove_dict["send_IP"] = root_send[0][3].text
+                                send_batch_stkmove_dict["send_DLL_NAME"] = root_send[0][4].text
+                                send_batch_stkmove_dict["send_FUNCTION_VERSION"] = root_send[0][5].text
+                                send_batch_stkmove_dict["send_CLASSNAME"] = root_send[0][6].text
+                                send_batch_stkmove_dict["send_PROCESS_ID"] = root_send[0][7].text
+                                send_batch_stkmove_dict["send_QUEUE_NAME"] = root_send[0][8].text
+                                send_batch_stkmove_dict["send_LANG"] = root_send[0][9].text
+                                send_batch_stkmove_dict["send_TIMESTAMP"] = root_send[0][10].text
+                                send_batch_stkmove_dict["send_strCOMMANDID"] = root_send[1][0].text
+                                send_batch_stkmove_dict["send_strUSERID"] = root_send[1][1].text
+                                send_batch_stkmove_dict["send_strCARRIERID"] = root_send[1][2].text
+                                send_batch_stkmove_dict["send_strCARRIERIDTYPE"] = root_send[1][3].text
+                                send_batch_stkmove_dict["send_strFROMDEVICE"] = root_send[1][4].text
+                                send_batch_stkmove_dict["send_strFROMPORT"] = root_send[1][5].text
+                                send_batch_stkmove_dict["send_strTODEVICE"] = root_send[1][6].text
+                                send_batch_stkmove_dict["send_strTOPORT"] = root_send[1][7].text
+                                send_batch_stkmove_dict["send_strEMPTYCARRIER"] = root_send[1][8].text
+                                send_batch_stkmove_dict["send_strPRIORITY"] = root_send[1][9].text
+                                send_batch_stkmove_dict["send_strMETHODNAME"] = root_send[1][-1][0].text
+                                send_batch_stkmove_dict["send_strFORNAME"] = root_send[1][-1][1].text
+                                send_batch_stkmove_dict["send_strCMD"] = root_send[1][-1][2].text
+        send_batch_stkmove_all_dict[send_batch_stkmove_dict_key]=send_batch_stkmove_dict
         print("delay:"+str(batch_stkmove_data_frame['delay'][batch_stkmove_data_frame_index])+"second")
         time.sleep(batch_stkmove_data_frame['delay'][batch_stkmove_data_frame_index])
-    print(send_batch_all_dict)
-    return jsonify(send_batch_all_dict)
+    print(send_batch_stkmove_all_dict)
+    return jsonify(send_batch_stkmove_all_dict)
+
+@app.route('/send_eqmove_batch_function',methods=["GET","PSOT"])
+def send_eqmove_batch_functionn():
+    timeNow = datetime.datetime.now()
+    Time = timeNow.strftime("%Y/%m/%d %H:%M:%S")
+    print("i am in send_eqmove_batch_function")
+    
+    batch_eqmove_data_frame = pd.read_excel('./batch_excel/eqmove.xlsx')
+    send_batch_eqmove_all_dict={}
+    print(batch_eqmove_data_frame)
+    batch_eqmove_data_frame['strTOPORT'] = batch_eqmove_data_frame['strTOPORT'].apply(lambda x : '{:0>2d}'.format(x))
+    for batch_eqmove_data_frame_index in range(len(batch_eqmove_data_frame)):
+        send_batch_eqmove_dict={}
+        send_batch_eqmove_dict_key="eqmove_batch_"+str(batch_eqmove_data_frame_index)
+        print("strCARRIERTYPE:"+str(batch_eqmove_data_frame['strCARRIERTYPE'][batch_eqmove_data_frame_index]))
+        print("strCOMMANDID:"+str(batch_eqmove_data_frame['strCOMMANDID'][batch_eqmove_data_frame_index]))
+        print("strUSERID:"+str(batch_eqmove_data_frame['strUSERID'][batch_eqmove_data_frame_index]))
+        print("strCARRIERID:"+str(batch_eqmove_data_frame['strCARRIERID'][batch_eqmove_data_frame_index]))
+        print("strFROMDEVICE:"+str(batch_eqmove_data_frame['strFROMDEVICE'][batch_eqmove_data_frame_index]))
+        print("strFROMPORT:"+'{:0>2}'.format(str(batch_eqmove_data_frame['strFROMPORT'][batch_eqmove_data_frame_index])))
+        print("strTODEVICE:"+str(batch_eqmove_data_frame['strTODEVICE'][batch_eqmove_data_frame_index]))
+        print("strTOPORT:"+str(batch_eqmove_data_frame['strTOPORT'][batch_eqmove_data_frame_index]))
+        print("strEMPTYCARRIER:"+str(batch_eqmove_data_frame['strEMPTYCARRIER'][batch_eqmove_data_frame_index]))
+        print("strPRIORITY:"+str(batch_eqmove_data_frame['strPRIORITY'][batch_eqmove_data_frame_index]))
+        print("strCMD:"+str(batch_eqmove_data_frame['strCMD'][batch_eqmove_data_frame_index]))
+        print("strMETHODNAME:"+str(batch_eqmove_data_frame['strMETHODNAME'][batch_eqmove_data_frame_index]))
+        print("strFORMNAME:"+str(batch_eqmove_data_frame['strFORMNAME'][batch_eqmove_data_frame_index]))
+        print("function is send")
+        if((str(batch_eqmove_data_frame['strMETHODNAME'][batch_eqmove_data_frame_index]))=="EQMOVE"):
+            print("function is eqmove")
+            EQMOVE_xml_data = EQMOVE.format(
+                IP=SendQueueIP,
+                QUEUE_NAME=SendQueueName,
+                CLIENT_HOSTNAME=HostName,
+                FUNCTION_VERSION=Version,
+                PROCESS_ID=PID,
+                TIMESTAMP=Time,
+                COMMANDID=str(batch_eqmove_data_frame['strCOMMANDID'][batch_eqmove_data_frame_index]),
+                USERID=str(batch_eqmove_data_frame['strUSERID'][batch_eqmove_data_frame_index]),
+                CARRIERID=str(batch_eqmove_data_frame['strCARRIERID'][batch_eqmove_data_frame_index]),
+                FROMDEVICE=str(batch_eqmove_data_frame['strFROMDEVICE'][batch_eqmove_data_frame_index]),
+                FROMPORT=str(batch_eqmove_data_frame['strFROMPORT'][batch_eqmove_data_frame_index]),
+                TODEVICE=str(batch_eqmove_data_frame['strTODEVICE'][batch_eqmove_data_frame_index]),
+                TOPORT=str(batch_eqmove_data_frame['strTOPORT'][batch_eqmove_data_frame_index]),
+                EMPTYCARRIER=str(batch_eqmove_data_frame['strEMPTYCARRIER'][batch_eqmove_data_frame_index]),
+                PRIORITY=str(batch_eqmove_data_frame['strPRIORITY'][batch_eqmove_data_frame_index]))
+            print(EQMOVE_xml_data)
+            status_of_send = send_msmaq("EQMOVE",EQMOVE_xml_data)
+            send_batch_eqmove_dict["status_of_send"] = status_of_send
+            send_batch_eqmove_dict["send_message_label"] = "EQMOVE"
+            send_batch_eqmove_dict["send_message_body"] = EQMOVE_xml_data
+            if(send_batch_eqmove_dict["send_message_body"][0] == "<"):
+                root_send = etree.fromstring(send_batch_eqmove_dict["send_message_body"])
+                if(len(root_send[1]) > 1):
+                    if(len(root_send[1][-1]) >= 1):
+                        if(root_send[1][-1][0].text =="EQMOVE"):
+                            if(str(root_send[1][-1][0].text) == "EQMOVE"):
+                                send_batch_eqmove_dict["send_CLIENT_HOSTNAME"] = root_send[0][0].text
+                                send_batch_eqmove_dict["send_FUNCTION"] = root_send[0][1].text
+                                send_batch_eqmove_dict["send_SERVERNAME"] = root_send[0][2].text
+                                send_batch_eqmove_dict["send_IP"] = root_send[0][3].text
+                                send_batch_eqmove_dict["send_DLL_NAME"] = root_send[0][4].text
+                                send_batch_eqmove_dict["send_FUNCTION_VERSION"] = root_send[0][5].text
+                                send_batch_eqmove_dict["send_CLASSNAME"] = root_send[0][6].text
+                                send_batch_eqmove_dict["send_PROCESS_ID"] = root_send[0][7].text
+                                send_batch_eqmove_dict["send_QUEUE_NAME"] = root_send[0][8].text
+                                send_batch_eqmove_dict["send_LANG"] = root_send[0][9].text
+                                send_batch_eqmove_dict["send_TIMESTAMP"] = root_send[0][10].text
+                                send_batch_eqmove_dict["send_strCOMMANDID"] = root_send[1][0].text
+                                send_batch_eqmove_dict["send_strUSERID"] = root_send[1][1].text
+                                send_batch_eqmove_dict["send_strCARRIERID"] = root_send[1][2].text
+                                send_batch_eqmove_dict["send_strCARRIERIDTYPE"] = root_send[1][3].text
+                                send_batch_eqmove_dict["send_strFROMDEVICE"] = root_send[1][4].text
+                                send_batch_eqmove_dict["send_strFROMPORT"] = root_send[1][5].text
+                                send_batch_eqmove_dict["send_strTODEVICE"] = root_send[1][6].text
+                                send_batch_eqmove_dict["send_strTOPORT"] = root_send[1][7].text
+                                send_batch_eqmove_dict["send_strEMPTYCARRIER"] = root_send[1][8].text
+                                send_batch_eqmove_dict["send_strPRIORITY"] = root_send[1][9].text
+                                send_batch_eqmove_dict["send_strMETHODNAME"] = root_send[1][-1][0].text
+                                send_batch_eqmove_dict["send_strFORNAME"] = root_send[1][-1][1].text
+                                send_batch_eqmove_dict["send_strCMD"] = root_send[1][-1][2].text
+        send_batch_eqmove_all_dict[send_batch_eqmove_dict_key]=send_batch_eqmove_dict
+        print("delay:"+str(batch_eqmove_data_frame['delay'][batch_eqmove_data_frame_index])+"second")
+        time.sleep(batch_eqmove_data_frame['delay'][batch_eqmove_data_frame_index])
+    print(send_batch_eqmove_all_dict)
+    return jsonify(send_batch_eqmove_all_dict)
+
+
+
 
 
 @app.route('/receive_function', methods=["GET", "POST"])
@@ -1684,34 +1774,6 @@ def receive_function_and_process_function():
         return jsonify(recv_dict)
 
 
-""""
-@app.route('/page_two/<username>', methods=['GET', 'POST'])
-def page_two(username):
-    if request.method == 'POST' and request.values['go_to']=='index':
-        # do stuff when the form is submitted
 
-        # redirect to end the POST handling
-        # the redirect can be to the same route or somewhere else
-
-        return redirect(url_for('index'))
-    if request.method == 'POST' and request.values['go_to']=='page_three':
-        return redirect(url_for('page_three'))
-
-    # show the form, it wasn't submitted
-    return render_template('page_two.html',username=username)
-@app.route('/page_three', methods=['GET', 'POST'])
-def page_three():
-    if request.method == 'POST' and request.values['go_to']=='index':
-        # do stuff when the form is submitted
-
-        # redirect to end the POST handling
-        # the redirect can be to the same route or somewhere else
-        return redirect(url_for('index'))
-    if request.method == 'POST' and request.values['go_to']=='page_two':
-        return redirect(url_for('page_two'))
-
-    # show the form, it wasn't submitted
-    return render_template('page_three.html')
-"""
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8887, debug=True)
