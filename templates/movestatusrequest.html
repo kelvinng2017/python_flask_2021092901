@@ -10,137 +10,144 @@
 {% block body %}
 <div class="row mb-3 d-flex justify-content-between">
     <div class="col-10">
-        <h1 class="h3">Transfer Test</h1>
+        <h1 class="h4 mb-0 align-bottom">Function Name: {{stk_dict["strFunction"]}}</h1>
     </div>
     <div class="col-2 text-end">
         <button class="btn btn-primary" onclick="location.reload()">Refresh</button>
     </div>
 </div>
 <div class="row">
-    {% include 'transfer_button.html' %}
+    <!-- LOGS TABLE START -->
     <div class="col-10">
-
         <div class="card">
-            <div class="card-header">
-                <h1 class="h3">
-                    function name:{{stk_dict["strFunction"]}}
-                </h1>
-            </div>
-            <div class="card-body py-0">
+            <div class="card-header pb-0">
                 <div class="row">
-                    <div class="mb-3 col-3">
-                        <div class="mb-2">
-                            <label class="form-label" for="strCOMMANDID">strCOMMANDID:</label>
-                            <input class="form-control" type="text" id="strCOMMANDID" name="strCOMMANDID" value={{stk_dict["strCOMAND"]}}>
-                        </div>
-
-
-                        <div class="mb-2">
-                            <label class="form-label" for="strFORMNAME">strFORMNAME:</label>
-                            <input class="form-control" type="text" id="strFORMNAME" name="strFORMNAME" value={{stk_dict["strFORNAME"]}}>
-                        </div>
-                        <div class="mb-2">
-
-                        </div>
-                        <div class="mb-2">
-
-                        </div>
+                    <h2 class="h3 col-10">Batch</h2>
+                    <div class="col-2 text-end">
+                        <button type="button" class="btn btn-primary" onclick="cleanup()">
+                            Clear Logs
+                        </button>
                     </div>
-<!-- Cols 2 -->
-                    <div class="mb-3 col-3">
-                        <div class="mb-2">
-                            <label class="form-label" for="strUSERID">strUSERID:</label>
-                            <input class="form-control" type="text" id="strUSERID" name="strUSERID" value={{stk_dict["strUSERID"]}}>
-                        </div>
-                        <div class="mb-2">
-                            <label class="form-label" for="strCMD">strCMD:</label>
-                            <input class="form-control" type="text" id="strCMD" name="strCMD" value={{stk_dict["strFunction"]}}>
-                        </div>
-                        <div class="mb-2">
+                </div>
+            </div>
+            <div class="card-body pt-0">
+                <table id="table-batch" class="table table-striped table-sm" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="col-1">No.</th>
+                            <th>Function</th>
+                            <th>COMMANDID</th>
+                            <th>CARRIERID</th>
+                            <th>MOVESTATUS</th>
+                            <th>TODEVICE</th>
+                            <th>TOPORT</th>
+                            <th>RESULT</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="databatch">
 
-                        </div>
-
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <h2 class="h3 col-10">Logs</h2>
+                    <div class="col-2 text-end">
+                        <button type="button" class="btn btn-primary" onclick="cleanup()">
+                            Clear Logs
+                        </button>
                     </div>
-<!-- Cols 3 -->
-                    <div class="mb-3 col-3">
-                        <div class="mb-2">
-                            <label class="form-label" for="strCARRIERID">strCARRIERID:</label>
-                            <select class="form-select" type="submit" name="strCARRIERRID" id="strCARRIERRID_selected">
-                                <option value="{{stk_dict['strCARRIERRID'][0]}}" selected>{{stk_dict["strCARRIERRID"][0]}}</option>
-                                {% for strCARRIERRID in stk_dict["strCARRIERRID"][1:] %}
-                                <option value="{{strCARRIERRID}}" id="hope_id">{{strCARRIERRID}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="mb-2">
+                </div>
+            </div>
+            <div class="card-body pt-0">
+                <table id="datatables-reponsive" class="table table-striped table-sm" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="col-1">No.</th>
+                            <th>Function</th>
+                            <th>COMMANDID</th>
+                            <th>CARRIERID</th>
+                            <th>MOVESTATUS</th>
+                            <th>TODEVICE</th>
+                            <th>TOPORT</th>
+                            <th>RESULT</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="datatables">
 
-                        </div>
-                        <div class="mb-2">
-
-                        </div>
-                    </div>
-<!-- Cols 4 -->
-                    <div class="mb-3 col-3">
-                        <div class="mb-2">
-                            <label class="form-label" for="strMETHODNAME">strMETHODNAME:</label>
-                            <input class="form-control" type="text" id="strMETHODNAME" name="strMETHODNAME" value={{stk_dict["strFunction"]}}>
-                        </div>
-                        <div class="mb-2">
-
-                        </div>
-                        <div class="mb-2">
-
-                        </div>
-                        <div class="mb-2">
-                            <label class="form-label" class="form-label" for="" form-label>　</label>
-                            <button id="send_to_ACS_Getway" type="button" class="btn btn-primary w-100">send_to_ACS_Getway</button>
-                        </div>
-                    </div>
-                </div>                
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</div>
-
-<!-- Logs -->
-<div class="container-fluid p-0">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header pb-0">
-                    <div class="row">
-                        <h2 class="h3 col-10">Logs</h2>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-primary" onclick="cleanup()">
-                                Clear Logs
-                            </button>
-                        </div>
+    <!-- LOGS TABLE END -->
+    <!-- CONTROL FORM START -->
+    <div class="col-2">
+        <div class="card">
+            <div class="card-body py-3">
+                <div class="row">
+                    <div class="mb-2">
+                        <label class="form-label fw-bolder">Batch Processing:</label>
+                        <button id="batch" type="button" class="btn btn-primary w-100 mt-2">Batch</button>
                     </div>
                 </div>
-                <div class="card-body pt-0">
-                    <table id="datatables-reponsive" class="table table-striped table-sm" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th class="col-1">No.</th>
-                                <th>Function</th>
-                                <th>COMMANDID</th>
-                                <th>CARRIERID</th>
-                                <th>MOVESTATUS</th>
-                                <th>TODEVICE</th>
-                                <th>TOPORT</th>
-                                <th>RESULT</th>
-                                <th>Details</th>
-                            </tr>
-                        </thead>
-                        <tbody id="datatables">
-                            
-                        </tbody>
-                    </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body py-3">
+                <div class="row">
+                    <div class="mb-2">
+                        <label class="form-label" for="strCOMMANDID">strCOMMANDID:</label>
+                        <input class="form-control" type="text" id="strCOMMANDID" name="strCOMMANDID"
+                            value={{stk_dict["strCOMAND"]}}>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" for="strUSERID">strUSERID:</label>
+                        <input class="form-control" type="text" id="strUSERID" name="strUSERID"
+                            value={{stk_dict["strUSERID"]}}>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" for="strCARRIERID">strCARRIERID:</label>
+                        <select class="form-select" type="submit" name="strCARRIERRID" id="strCARRIERRID_selected">
+                            <option value="{{stk_dict['strCARRIERRID'][0]}}" selected>{{stk_dict["strCARRIERRID"][0]}}
+                            </option>
+                            {% for strCARRIERRID in stk_dict["strCARRIERRID"][1:] %}
+                            <option value="{{strCARRIERRID}}" id="hope_id">{{strCARRIERRID}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" for="strMETHODNAME">strMETHODNAME:</label>
+                        <input class="form-control" type="text" id="strMETHODNAME" name="strMETHODNAME"
+                            value={{stk_dict["strFunction"]}}>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" for="strFORMNAME">strFORMNAME:</label>
+                        <input class="form-control" type="text" id="strFORMNAME" name="strFORMNAME"
+                            value={{stk_dict["strFORNAME"]}}>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" for="strCMD">strCMD:</label>
+                        <input class="form-control" type="text" id="strCMD" name="strCMD"
+                            value={{stk_dict["strFunction"]}}>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label" class="form-label" for="" form-label>　</label>
+                        <button id="send_to_ACS_Getway" type="button"
+                            class="btn btn-primary w-100">send_to_ACS_Getway</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <!-- CONTROL FORM END -->
+
+
+
     <script type=text/javascript>
 
         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
@@ -368,17 +375,7 @@
                                     console.log("TEST2", test)
                                     let resRecv =  test.find(o => o['recv_FUNCTION'])
                                     let resSend =  test.find(o => o['send_FUNCTION'])
-                                    let resSenddata =  {
-                                        "no": dataList.length +1,
-                                        "data": tryingsend(resSend)
-                                    }
-                                    dataList.push(resSenddata)
-                                    console.log(typeof dataList)
-                                    localStorage.setItem('dataLogs_movestatusrequest', JSON.stringify(dataList))
-                                    updateLogs(dataList)
-                                    
-                                    resSenddata = ''
-                                    
+
                                     let resRecvdata =  {
                                         "no": dataList.length +1,
                                         "data": tryingrecv(resRecv)
@@ -388,6 +385,18 @@
                                     localStorage.setItem('dataLogs_movestatusrequest', JSON.stringify(dataList))
                                     updateLogs(dataList)
                                     resRecvdata = ''
+                                    
+                                    let resSenddata =  {
+                                        "no": dataList.length +1,
+                                        "data": tryingsend(resSend)
+                                    }
+                                    dataList.push(resSenddata)
+                                    console.log(typeof dataList)
+                                    localStorage.setItem('dataLogs_movestatusrequest', JSON.stringify(dataList))
+                                    updateLogs(dataList)
+                                    resSenddata = ''
+                                    
+
                                 }
                                 
                             }
