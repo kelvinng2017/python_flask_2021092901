@@ -298,7 +298,7 @@
 
             $.ajax({
                 type: "POST",
-                url: $SCRIPT_ROOT + "/send_stkmove_batch_function",
+                url: $SCRIPT_ROOT + "/send_eqmove_batch_function",
                 data: form_data,
                 success: (data) => {
                     if (data.length > 0) {
@@ -321,7 +321,7 @@
 
                     // const input = data.send_message_label
 
-                    let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmov')) || [];
+                    let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || [];
 
                     updateLogs(dataList)
 
@@ -342,7 +342,7 @@
 
                     console.log("POSTDATAORI", test)
 
-                    if (test.stkmove_batch_0 != '') {
+                    if (test.eqmove_batch_0 != '') {
                         let resendlog = Object.entries(test)
                         console.log("BATCHLOG", resendlog)
 
@@ -356,7 +356,7 @@
                             dataList.push(postdata)
                             console.log(typeof dataList)
                             console.log("BATCH", dataList)
-                            localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                            localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
                             updateLogs(dataList)
                             postdata = ''
                         }
@@ -421,7 +421,7 @@
                         // const input = data.recv_message_label
                         // displayData(input)
                         if (data.recv_message_label != 'msmq no label') {
-                            let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || []
+                            let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
 
                             updateLogs(dataList)
 
@@ -462,7 +462,7 @@
                                 // console.log("RESDATA：", resdata)
                                 dataList.push(resdata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
                                 updateLogs(dataList)
 
                                 resdata = ''
@@ -476,7 +476,7 @@
                                 }
                                 dataList.push(resRecvdata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
                                 updateLogs(dataList)
                                 resRecvdata = ''
 
@@ -486,7 +486,7 @@
                                 }
                                 dataList.push(resSenddata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
                                 updateLogs(dataList)
                                 resSenddata = ''
 
