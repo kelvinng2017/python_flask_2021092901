@@ -813,8 +813,8 @@ def send_batch_function():
                                 send_batch_dict["send_strFORNAME"] = root_send[1][-1][1].text
                                 send_batch_dict["send_strCMD"] = root_send[1][-1][2].text
         send_batch_all_dict[send_batch_dict_key]=send_batch_dict
-        #print("delay:"+str(batch_stkmove_data_frame['delay'][batch_stkmove_data_frame_index])+"second")
-        #time.sleep(batch_stkmove_data_frame['delay'][batch_stkmove_data_frame_index])
+        print("delay:"+str(batch_stkmove_data_frame['delay'][batch_stkmove_data_frame_index])+"second")
+        time.sleep(batch_stkmove_data_frame['delay'][batch_stkmove_data_frame_index])
     print(send_batch_all_dict)
     return jsonify(send_batch_all_dict)
 
