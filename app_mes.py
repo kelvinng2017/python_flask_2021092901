@@ -728,8 +728,9 @@ def send_batch_function():
     print(batch_stkmove_data_frame)
     batch_stkmove_data_frame['strFROMPORT'] = batch_stkmove_data_frame['strFROMPORT'].apply(lambda x : '{:0>2d}'.format(x))
     print(batch_stkmove_data_frame['strFROMPORT'])
-    send_batch_dict={}
+    
     for batch_stkmove_data_frame_index in range(len(batch_stkmove_data_frame)):
+        send_batch_dict={}
         send_batch_dict_key="stkmove_batch_"+str(batch_stkmove_data_frame_index)
         print("strCARRIERTYPE:"+str(batch_stkmove_data_frame['strCARRIERTYPE'][batch_stkmove_data_frame_index]))
         #send_batch_dict['strCARRIERTYPE']=str(batch_stkmove_data_frame['strCARRIERTYPE'][batch_stkmove_data_frame_index])

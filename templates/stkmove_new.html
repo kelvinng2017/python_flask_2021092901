@@ -349,7 +349,7 @@
                     console.log("POSTDATAORI", test)
 
                     if (test.stkmove_batch_0 != '') {
-                        let resendlog = Object.entries(test).slice(0, -1)
+                        let resendlog = Object.entries(test)
                         console.log("BATCHLOG", resendlog)
 
                         for (let i = 0; i < resendlog.length; i++) {
