@@ -718,7 +718,7 @@ def send_function():
         send_dict["send_message_body"] = "no this function"
         return jsonify(send_dict)
     # return jsonify(send_dict)
-@app.route('/send_batch_function', methods=["GET", "POST"])
+@app.route('/send_stkmove_batch_function', methods=["GET", "POST"])
 def send_batch_function():
     timeNow = datetime.datetime.now()  # 讀取系統現在的時間戳
     Time = timeNow.strftime("%Y/%m/%d %H:%M:%S")  # 將時間戳轉爲YYYY/MM/DD HH:mm:SS格式
@@ -733,31 +733,18 @@ def send_batch_function():
         send_batch_dict={}
         send_batch_dict_key="stkmove_batch_"+str(batch_stkmove_data_frame_index)
         print("strCARRIERTYPE:"+str(batch_stkmove_data_frame['strCARRIERTYPE'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strCARRIERTYPE']=str(batch_stkmove_data_frame['strCARRIERTYPE'][batch_stkmove_data_frame_index])
         print("strCOMMANDID:"+str(batch_stkmove_data_frame['strCOMMANDID'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strCOMMANDID']=str(batch_stkmove_data_frame['strCOMMANDID'][batch_stkmove_data_frame_index])
         print("strUSERID:"+str(batch_stkmove_data_frame['strUSERID'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strUSERID']=str(batch_stkmove_data_frame['strUSERID'][batch_stkmove_data_frame_index])
         print("strCARRIERID:"+str(batch_stkmove_data_frame['strCARRIERID'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strCARRIERID']=str(batch_stkmove_data_frame['strCARRIERID'][batch_stkmove_data_frame_index])
         print("strFROMDEVICE:"+str(batch_stkmove_data_frame['strFROMDEVICE'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strFROMDEVICE']=str(batch_stkmove_data_frame['strFROMDEVICE'][batch_stkmove_data_frame_index])
         print("strFROMPORT:"+'{:0>2}'.format(str(batch_stkmove_data_frame['strFROMPORT'][batch_stkmove_data_frame_index])))
-        #send_batch_dict['strFROMPORT']=str(batch_stkmove_data_frame['strFROMPORT'][batch_stkmove_data_frame_index])
         print("strTODEVICE:"+str(batch_stkmove_data_frame['strTODEVICE'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strTODEVICE']=str(batch_stkmove_data_frame['strTODEVICE'][batch_stkmove_data_frame_index])
         print("strTOPORT:"+str(batch_stkmove_data_frame['strTOPORT'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strTOPORT']=str(batch_stkmove_data_frame['strTOPORT'][batch_stkmove_data_frame_index])
         print("strEMPTYCARRIER:"+str(batch_stkmove_data_frame['strEMPTYCARRIER'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strEMPTYCARRIER']=str(batch_stkmove_data_frame['strEMPTYCARRIER'][batch_stkmove_data_frame_index])
         print("strPRIORITY:"+str(batch_stkmove_data_frame['strPRIORITY'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strPRIORITY']=str(batch_stkmove_data_frame['strPRIORITY'][batch_stkmove_data_frame_index])
         print("strCMD:"+str(batch_stkmove_data_frame['strCMD'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strCMD']=str(batch_stkmove_data_frame['strCMD'][batch_stkmove_data_frame_index])
         print("strMETHODNAME:"+str(batch_stkmove_data_frame['strMETHODNAME'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strMETHODNAME']=str(batch_stkmove_data_frame['strMETHODNAME'][batch_stkmove_data_frame_index])
         print("strFORMNAME:"+str(batch_stkmove_data_frame['strFORMNAME'][batch_stkmove_data_frame_index]))
-        #send_batch_dict['strFORMNAME']=str(batch_stkmove_data_frame['strFORMNAME'][batch_stkmove_data_frame_index])
         print("function is send")
         if((str(batch_stkmove_data_frame['strMETHODNAME'][batch_stkmove_data_frame_index]))=="STKMOVE"):
             print("function is stkmove")
