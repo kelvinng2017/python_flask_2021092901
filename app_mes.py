@@ -805,7 +805,7 @@ def send_stkmove_batch_function():
     print(send_batch_stkmove_all_dict)
     return jsonify(send_batch_stkmove_all_dict)
 
-@app.route('/send_eqmove_batch_function',methods=["GET","PSOT"])
+@app.route('/send_eqmove_batch_function',methods=["GET","POST"])
 def send_eqmove_batch_function():
     timeNow = datetime.datetime.now()
     Time = timeNow.strftime("%Y/%m/%d %H:%M:%S")
