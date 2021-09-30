@@ -810,7 +810,7 @@ def send_eqmove_batch_function():
     timeNow = datetime.datetime.now()
     Time = timeNow.strftime("%Y/%m/%d %H:%M:%S")
     print("i am in send_eqmove_batch_function")
-    
+    #test
     batch_eqmove_data_frame = pd.read_excel('./batch_excel/eqmove.xlsx')
     send_batch_eqmove_all_dict={}
     print(batch_eqmove_data_frame)
