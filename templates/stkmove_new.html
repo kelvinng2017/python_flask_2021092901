@@ -674,20 +674,8 @@
                             }
                             console.log("TESTLENGTH", test.length)
                             if (test.length === undefined) {
-                                console.log("TESTUNDEFINED", test)
-                                let resdata = {
-                                    "no": dataList.length + 1,
-                                    "data": tryingrecv(test)
-                                }
-                                // console.log("RESDATA：", resdata)
-                                dataList.push(resdata)
-                                console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
-                                updateLogs(dataList)
-
-                                resdata = ''
-                            } else if (test.length == 1) {
                                 if (test[0].data.stkmove_batch_0 != '') {
+                                    console.log("BATCH", test[0].data)
                                     let resendlog = Object.entries(test[0].data)
 
                                     for (let i = 0; i < resendlog.length; i++) {
@@ -705,6 +693,18 @@
                                         resSenddata = ''
                                     }
                                 }
+                                console.log("TESTUNDEFINED", test)
+                                let resdata = {
+                                    "no": dataList.length + 1,
+                                    "data": tryingrecv(test)
+                                }
+                                // console.log("RESDATA：", resdata)
+                                dataList.push(resdata)
+                                console.log(typeof dataList)
+                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                updateLogs(dataList)
+
+                                resdata = ''
                             } else if (test.length == 2) {
                                 console.log("TEST2", test)
                                 let resRecv = test.find(o => o['recv_FUNCTION'])
