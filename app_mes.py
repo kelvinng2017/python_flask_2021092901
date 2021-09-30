@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from crypt import methods
 from flask import Flask, render_template, request, redirect, url_for, make_response, Response, jsonify
 import json
 import random as rand
