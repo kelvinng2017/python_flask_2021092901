@@ -386,7 +386,7 @@ def send_function():
                             send_dict["send_strCMD"] = root_send[1][-1][2].text
                             result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                             print(result_send_data_frame)
-                            result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_stkmove.xlsx")
+                            #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_stkmove.xlsx")
                             return jsonify(send_dict)
     elif(send_method == "EQMOVE"):
         print("eqmove function is send")
@@ -449,7 +449,7 @@ def send_function():
                             send_dict["send_strCMD"] = root_send[1][-1][2].text
                             result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                             print(result_send_data_frame)
-                            result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_eqmove.xlsx")
+                            #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_eqmove.xlsx")
                             return jsonify(send_dict)
     elif(send_method == "EMPTYCARRMOVE"):
         print("emptycarrmove function is send")
@@ -501,7 +501,7 @@ def send_function():
                                 send_dict["send_strCMD"] = root_send[1][-1][2].text
                                 result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                 print(result_send_data_frame)
-                                result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_emptycarrmove.xlsx")
+                                #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_emptycarrmove.xlsx")
                                 return jsonify(send_dict)
     elif(send_method == "CHANGECMD"):
         print("changecmd function is send")
@@ -560,7 +560,7 @@ def send_function():
                                 send_dict["send_strCMD"] = root_send[1][-1][2].text
                                 result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                 print(result_send_data_frame)
-                                result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_changecmd.xlsx")
+                                #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_changecmd.xlsx")
                                 return jsonify(send_dict)
     elif(send_method == "MOVEREQUEST"):
         print("moverequest function is send")
@@ -618,7 +618,7 @@ def send_function():
                                 send_dict["send_strCMD"] = root_send[1][-1][2].text
                                 result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                 print(result_send_data_frame)
-                                result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_moverequest.xlsx")
+                                #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_moverequest.xlsx")
                                 return jsonify(send_dict)
     elif(send_method == "INVDATA"):
         print('INVDATA function is send')
@@ -665,7 +665,7 @@ def send_function():
                                 send_dict["send_strCMD"] = root_send[1][-1][2].text
                                 result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                 print(result_send_data_frame)
-                                result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_invdata.xlsx")
+                                #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_invdata.xlsx")
                                 return jsonify(send_dict)
     elif(send_method == "MOVESTATUSREQUEST"):
         print("movestatusrequest function is send")
@@ -712,7 +712,7 @@ def send_function():
                                 send_dict["send_strCMD"] = root_send[1][-1][2].text
                                 result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                 print(result_send_data_frame)
-                                result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_movestatusrequest.xlsx")
+                                #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_movestatusrequest.xlsx")
                                 return jsonify(send_dict)
     else:
         send_dict["send_message_body"] = "no this function"
@@ -867,7 +867,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_stkmove_r.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_stkmove_r.xlsx")
                         return jsonify(recv_dict)
                     if(str(root_recv[1][-1][0].text) == "EQMOVE_R"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -889,7 +889,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strFORNAME"] = root_recv[1][-1][1].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_eqmove_r.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_eqmove_r.xlsx")
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         return jsonify(recv_dict)
                     if(str(root_recv[1][-1][0].text) == "EMPTYCARRMOVE_R"):
@@ -919,7 +919,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_emptycarrmove_r.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_emptycarrmove_r.xlsx")
                         return jsonify(recv_dict)
                     if(str(root_recv[1][-1][0].text) == "CHANGECMD_R"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -942,7 +942,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_changecmd_r.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_changecmd_r.xlsx")
                         return jsonify(recv_dict)
                     if(str(root_recv[1][-1][0].text) == "MOVEREQUEST_R"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -965,7 +965,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_moverequest_r.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_moverequest_r.xlsx")
                         return jsonify(recv_dict)
                     if(str(root_recv[1][-1][0].text) == "INVDATA_R"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -992,7 +992,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_invdata_r.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_invdata_r.xlsx")
                         return jsonify(recv_dict)
                     if(str(root_recv[1][-1][0].text) == "MOVESTATUSREQUEST_R"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -1020,7 +1020,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_movestatusrequest_r.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_movestatusrequest_r.xlsx")
                         return jsonify(recv_dict)
                 if(root_recv[1][-1][0].text in need_change_to_input_list):
                     if(str(root_recv[1][-1][0].text) == "OUTSTK"):
@@ -1042,7 +1042,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strFORNAME"] = root_recv[1][-1][1].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_outstk.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_outstk.xlsx")
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         OUTSTK_R_xml_data = OUTSTK_R.format(
                             IP=recv_dict["recv_IP"],
@@ -1107,7 +1107,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_leave.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_leave.xlsx")
                         # print(recv_dict_whit_xml)
                         LEAVE_R_xml_data = LEAVE_R.format(
                             IP=recv_dict["recv_IP"],
@@ -1158,7 +1158,7 @@ def receive_function_and_process_function():
                                             send_dict["send_strCMD"] = root_send[1][-1][2].text
                                             result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                             print(result_send_data_frame)
-                                            result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_leave_r.xlsx")
+                                            #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_leave_r.xlsx")
                                             return jsonify(send_dict, recv_dict)
                     if(str(root_recv[1][-1][0].text) == "ARRIVE"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -1182,7 +1182,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_arrive.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_arrive.xlsx")
                         # print(recv_dict_whit_xml)
                         ARRIVE_R_xml_data = ARRIVE_R.format(
                             IP=recv_dict["recv_IP"],
@@ -1228,7 +1228,7 @@ def receive_function_and_process_function():
                                             send_dict["send_strCMD"] = root_send[1][-1][2].text
                                             result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                             print(result_send_data_frame)
-                                            result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_arriver_r.xlsx")
+                                            #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_arriver_r.xlsx")
                                             return jsonify(send_dict, recv_dict)
                     if(str(root_recv[1][-1][0].text) == "VALIDINPUT"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -1255,7 +1255,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_validinput.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_validinput.xlsx")
                         # print(recv_dict_whit_xml)
                         VALIDINPUT_R_xml_data = VALIDINPUT_R.format(
                             IP=recv_dict["recv_IP"],
@@ -1301,7 +1301,7 @@ def receive_function_and_process_function():
                                             send_dict["send_strCMD"] = root_send[1][-1][2].text
                                             result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                             print(result_send_data_frame)
-                                            result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_validinput_r.xlsx")
+                                            #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_validinput_r.xlsx")
                                             return jsonify(send_dict, recv_dict)
                     if(str(root_recv[1][-1][0].text) == "OUTEQP"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -1325,7 +1325,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_outeqp.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_outeqp.xlsx")
                         # print(recv_dict_whit_xml)
                         OUTEQP_R_xml_data = OUTEQP_R.format(
                             IP=recv_dict["recv_IP"],
@@ -1371,7 +1371,7 @@ def receive_function_and_process_function():
                                             send_dict["send_strCMD"] = root_send[1][-1][2].text
                                             result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                             print(result_send_data_frame)
-                                            result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_outeqp_r.xlsx")
+                                            #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_outeqp_r.xlsx")
                                             return jsonify(send_dict, recv_dict)
                     if(str(root_recv[1][-1][0].text) == "INEQP"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -1395,7 +1395,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_ineqp_r.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_ineqp_r.xlsx")
                         # print(recv_dict_whit_xml)
                         INEQP_R_xml_data = INEQP_R.format(
                             IP=recv_dict["recv_IP"],
@@ -1447,7 +1447,7 @@ def receive_function_and_process_function():
                                             print("check823")
                                             result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                             print(result_send_data_frame)
-                                            result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_ineqp_r.xlsx")
+                                            #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_ineqp_r.xlsx")
                                             return jsonify(send_dict, recv_dict)
                     if(str(root_recv[1][-1][0].text) == "CARR_ALARM"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -1471,7 +1471,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_carr_alarm.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_carr_alarm.xlsx")
                         # print(recv_dict_whit_xml)
                         CARR_ALARM_R_xml_data = CARR_ALARM_R.format(
                             IP=recv_dict["recv_IP"],
@@ -1517,7 +1517,7 @@ def receive_function_and_process_function():
                                             send_dict["send_strCMD"] = root_send[1][-1][2].text
                                             result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                             print(result_send_data_frame)
-                                            result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_ carr_alarm_r.xlsx")
+                                            #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_ carr_alarm_r.xlsx")
                                             return jsonify(send_dict, recv_dict)
                     if(str(root_recv[1][-1][0].text) == "INSTK"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -1539,7 +1539,7 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_instk.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_instk.xlsx")
                         # print(recv_dict_whit_xml)
                         INSTK_R_xml_data = INSTK_R.format(
                             IP=recv_dict["recv_IP"],
@@ -1585,7 +1585,7 @@ def receive_function_and_process_function():
                                             send_dict["send_strCMD"] = root_send[1][-1][2].text
                                             result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                             print(result_send_data_frame)
-                                            result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_instk_r.xlsx")
+                                            #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_instk_r.xlsx")
                                             return jsonify(send_dict, recv_dict)
                     if(str(root_recv[1][-1][0].text) == "FOUPINFO"):
                         recv_dict["recv_CLIENT_HOSTNAME"] = root_recv[0][0].text
@@ -1606,8 +1606,10 @@ def receive_function_and_process_function():
                         recv_dict["recv_strCMD"] = root_recv[1][-1][2].text
                         result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                         print(result_recv_data_frame)
-                        result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_foupinfo.xlsx")
+                        #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strCOMMANDID"]+"_foupinfo.xlsx")
                         # print(recv_dict_whit_xml)
+                        f = open('example.json', 'r')  
+                        data = json.load(f)
                         FOUPINFO_R_xml_data = FOUPINFO_R.format(
                             IP=recv_dict["recv_IP"],
                             QUEUE_NAME=recv_dict["recv_QUEUE_NAME"],
@@ -1617,12 +1619,13 @@ def receive_function_and_process_function():
                             TIMESTAMP=recv_dict["recv_TIMESTAMP"],
                             COMMANDID=recv_dict["recv_strCOMMANDID"],
                             CARRIERID=recv_dict["recv_strCARRIERID"],
-                            TODEVICE="LSD023",
+                            TODEVICE=data.get(recv_dict["recv_strCARRIERID"]),
                             TOPORT="1234",
                             RESULT="OK",
                             ERRORMESSAGE="",
 
                         )
+                        f.close()
                         print(FOUPINFO_R_xml_data)
                         send_dict["send_message_body"] = FOUPINFO_R_xml_data
                         send_dict["send_message_label"] = "FOUPINFO_R"
@@ -1658,7 +1661,7 @@ def receive_function_and_process_function():
                                             send_dict["send_strCMD"] = root_send[1][-1][2].text
                                             result_send_data_frame=pd.DataFrame.from_dict(send_dict, orient='index')
                                             print(result_send_data_frame)
-                                            result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_foupinfo_r.xlsx")
+                                            #result_send_data_frame.to_excel("./mes_excel/"+send_dict["send_strCOMMANDID"]+"_foupinfo_r.xlsx")
                                             return jsonify(send_dict, recv_dict)
             if(str(root_recv[1][1].tag) == "strALARMID"):
                 print(root_recv[1][1].tag)
@@ -1687,7 +1690,7 @@ def receive_function_and_process_function():
                 recv_dict["recv_strSTAGE"] = root_recv[1][10].text
                 result_recv_data_frame=pd.DataFrame.from_dict(recv_dict, orient='index')
                 print(result_recv_data_frame)
-                result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strALARMID"]+"_ALARM.xlsx")
+                #result_recv_data_frame.to_excel("./mes_excel/"+recv_dict["recv_strALARMID"]+"_ALARM.xlsx")
                 return jsonify(send_dict, recv_dict)
     else:
         return jsonify(recv_dict)
