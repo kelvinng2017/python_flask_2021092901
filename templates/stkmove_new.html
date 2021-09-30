@@ -346,25 +346,28 @@
                         return result;
                     }
 
-                    console.log("BATCH", test)
+                    console.log("POSTDATAORI", test)
 
-                    if (test[0].data.stkmove_batch_0 != '') {
-                        let resendlog = Object.entries(test[0].data)
+                    if (test.stkmove_batch_0 != '') {
+                        let resendlog = Object.entries(test).slice(0, -1)
+                        console.log("BATCHLOG", resendlog)
 
                         for (let i = 0; i < resendlog.length; i++) {
-                            console.log("FIN", resendlog[i][1])
 
                             let postdata = {
                                 "no": dataList.length + 1,
                                 "data": trying(resendlog[i][1])
                             }
+
                             dataList.push(postdata)
                             console.log(typeof dataList)
+                            console.log("BATCH", dataList)
                             localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
                             updateLogs(dataList)
                             postdata = ''
                         }
                     }
+
 
                     idRefresh()
 
