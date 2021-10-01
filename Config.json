@@ -3,8 +3,8 @@
     "RecvQueueName": "MESQueue",
     "ErrQueueName": "MESQueue",
     "SendQueueIP": "tcp:192.168.0.85",
-    "RecvQueueIP": "tcp:192.168.0.90",
-    "ErrQueueIP": "tcp:192.168.0.90",
+    "RecvQueueIP": "tcp:192.168.0.85",
+    "ErrQueueIP": "tcp:192.168.0.85",
     "IP": "192.168.0.85",
     "STK_List": {
         "E003": "",
