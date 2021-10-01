@@ -168,7 +168,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="excelDataListLabel">STKMOVE EXCEL</h5>
+                    <h5 class="modal-title" id="excelDataListLabel">eqmove EXCEL</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -411,6 +411,7 @@
 
                     for (var i = 0, l = json_send.length; i < l; i++) {
                         for (var key in json_send[i]) {
+
                             console.log(key + ':' + json_send[i][key]);
                         }
                     }
@@ -420,7 +421,7 @@
 
                     // const input = data.send_message_label
 
-                    let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmov')) || [];
+                    let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || [];
 
                     update()
 
@@ -441,7 +442,7 @@
 
                     console.log("POSTDATAORI", test)
 
-                    if (test.stkmove_batch_0 != '') {
+                    if (test.eqmove_batch_0 != '') {
                         let resendlog = Object.entries(test)
                         console.log("BATCHLOG", resendlog)
 
