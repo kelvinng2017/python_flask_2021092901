@@ -923,7 +923,8 @@ def send_invdata_batch_function():
                 USERID=str(batch_invdata_data_frame['strUSERID'][batch_invdata_data_frame_index]),
                 STKID=str(batch_invdata_data_frame['strSTKID'][batch_invdata_data_frame_index]))
             print(INVDATA_xml_data)
-            send_batch_invdata_dict["status_of_send"] = send_batch_invdata_dict
+            status_of_send = send_msmaq("INVDATA",INVDATA_xml_data)
+            send_batch_invdata_dict["status_of_send"] = status_of_send
             send_batch_invdata_dict["send_message_label"] = "INVDATA"
             send_batch_invdata_dict["send_message_body"] = INVDATA_xml_data
             if(send_batch_invdata_dict["send_message_body"][0] == "<"):
