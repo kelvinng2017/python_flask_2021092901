@@ -724,7 +724,7 @@ def send_stkmove_batch_function():
     Time = timeNow.strftime("%Y/%m/%d %H:%M:%S")  # 將時間戳轉爲YYYY/MM/DD HH:mm:SS格式
     print("i am in send_stkmove_batch_function")
     send_batch_stkmove_all_dict={}
-    batch_stkmove_data_frame = pd.read_excel('./batch_excel/stkmove.xlsx')#讀取excel文件
+    batch_stkmove_data_frame = pd.read_excel('./static/batch_excel/stkmove.xlsx')#讀取excel文件
     print(batch_stkmove_data_frame)
     batch_stkmove_data_frame['strFROMPORT'] = batch_stkmove_data_frame['strFROMPORT'].apply(lambda x : '{:0>2d}'.format(x))
     #print(batch_stkmove_data_frame['strFROMPORT'])
@@ -811,7 +811,7 @@ def send_eqmove_batch_function():
     Time = timeNow.strftime("%Y/%m/%d %H:%M:%S")
     print("i am in send_eqmove_batch_function")
     #test
-    batch_eqmove_data_frame = pd.read_excel('./batch_excel/eqmove.xlsx')
+    batch_eqmove_data_frame = pd.read_excel('./static/batch_excel/eqmove.xlsx')
     send_batch_eqmove_all_dict={}
     print(batch_eqmove_data_frame)
     batch_eqmove_data_frame['strTOPORT'] = batch_eqmove_data_frame['strTOPORT'].apply(lambda x : '{:0>2d}'.format(x))
