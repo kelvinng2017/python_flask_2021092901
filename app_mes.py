@@ -890,7 +890,7 @@ def send_eqmove_batch_function():
         time.sleep(batch_eqmove_data_frame['delay'][batch_eqmove_data_frame_index])
     print(send_batch_eqmove_all_dict)
     return jsonify(send_batch_eqmove_all_dict)
-
+""""
 @app.route('/send_invdata_batch_function',methods=["GET","POST"])
 def send_eqmove_batch_function():
     timeNow = datetime.datetime.now()
@@ -954,7 +954,7 @@ def send_eqmove_batch_function():
         time.sleep(batch_invdata_data_frame['delay'][batch_invdata_data_frame_index])
     print(send_batch_invdata_all_dict)
     return jsonify(send_batch_invdata_all_dict)
-
+"""
 
 
 
