@@ -455,7 +455,7 @@
                             dataList.push(postdata)
                             console.log(typeof dataList)
                             console.log("BATCH", dataList)
-                            localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                            localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
                             update()
                             postdata = ''
                         }
@@ -520,7 +520,7 @@
                         // const input = data.recv_message_label
                         // displayData(input)
                         if (data.recv_message_label != 'msmq no label') {
-                            let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || []
+                            let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
 
                             update()
 
@@ -561,7 +561,7 @@
                                 // console.log("RESDATA：", resdata)
                                 dataList.push(resdata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
                                 update()
 
                                 resdata = ''
@@ -575,7 +575,7 @@
                                 }
                                 dataList.push(resRecvdata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
                                 update()
                                 resRecvdata = ''
 
@@ -585,7 +585,7 @@
                                 }
                                 dataList.push(resSenddata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
                                 update()
                                 resSenddata = ''
 
