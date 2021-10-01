@@ -3,8 +3,10 @@
 {% block head %}
 <title>Transfer Test - Gyro Test Tools</title>
 <link rel="stylesheet" type="text/css" href="../static/css/dashborad.css">
-<script src="{{ url_for('static', filename='js/datatables.js') }}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='js/table-control.js') }}" type="text/javascript"></script>
+<link href="{{ url_for('static', filename='css/bootstrap-table.min.css') }}" rel="stylesheet">
+<script src="{{ url_for('static', filename='js/bootstrap-table.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/dist_shim.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='js/dist_xlsx.full.min.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block body %}
@@ -22,40 +24,6 @@
         <div class="card">
             <div class="card-header pb-0">
                 <div class="row">
-                    <h2 class="h3 col-10">Batch</h2>
-                    <div class="col-2 text-end">
-                        <button type="button" class="btn btn-primary" onclick="cleanup()">
-                            Clear Logs
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body pt-0">
-                <table id="table-batch" class="table table-striped table-sm" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th class="col-1">No.</th>
-                            <th>Function</th>
-                            <th>COMMANDID</th>
-                            <th>CARRIERID</th>
-                            <th>FROMDEVICE/STKID</th>
-                            <th>FROMPORT</th>
-                            <th>TODEVICE</th>
-                            <th>TOPORT</th>
-                            <th>VEHICLEID</th>
-                            <th>RESULT</th>
-                            <th>Details</th>
-                        </tr>
-                    </thead>
-                    <tbody id="databatch">
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header pb-0">
-                <div class="row">
                     <h2 class="h3 col-10">Logs</h2>
                     <div class="col-2 text-end">
                         <button type="button" class="btn btn-primary" onclick="cleanup()">
@@ -65,25 +33,31 @@
                 </div>
             </div>
             <div class="card-body pt-0">
-                <table id="datatables-reponsive" class="table table-striped table-sm" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th class="col-1">No.</th>
-                            <th>Function</th>
-                            <th>COMMANDID</th>
-                            <th>CARRIERID</th>
-                            <th>FROMDEVICE/STKID</th>
-                            <th>FROMPORT</th>
-                            <th>TODEVICE</th>
-                            <th>TOPORT</th>
-                            <th>VEHICLEID</th>
-                            <th>RESULT</th>
-                            <th>Details</th>
-                        </tr>
-                    </thead>
-                    <tbody id="datatables">
-
-                    </tbody>
+                <table
+                id="table"
+                data-toolbar="#toolbar"
+                data-search="true"
+                data-show-toggle="true"
+                data-show-fullscreen="true"
+                data-show-pagination-switch="true"
+                data-pagination="true"
+                data-id-field="id"
+                data-page-list="[10, 25, 50, 100, all]"
+                >
+                <thead>
+                    <tr>
+                        <th class="col-1" data-field="no">No.</th>
+                        <th data-field="data._FUNCTION">Function</th>
+                        <th data-field="data._strCOMMANDID">COMMANDID</th>
+                        <th data-field="data._strCARRIERID">CARRIERID</th>
+                        <th data-field="data._strFROMDEVICE">FROMDEVICE/STKID</th>
+                        <th data-field="data._strFROMPORT">FROMPORT</th>
+                        <th data-field="data._strTODEVICE">TODEVICE</th>
+                        <th data-field="data._strTOPORT">TOPORT</th>
+                        <th data-field="data._strRESULT">RESULT</th>
+                        <th data-field="">Details</th>
+                    </tr>
+                </thead>
                 </table>
             </div>
         </div>
@@ -97,6 +71,7 @@
                     <div class="mb-2">
                         <label class="form-label fw-bolder">Batch Processing:</label>
                         <button id="batch" type="button" class="btn btn-primary w-100 mt-2">Batch</button>
+                        <button type="button" class="btn btn-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#excelDataList">LAUNCH EXCEL</button>
                     </div>
                 </div>
             </div>
@@ -104,6 +79,7 @@
         <div class="card">
             <div class="card-body py-3">
                 <div class="row">
+                    <label class="form-label fw-bolder">Input:</label>
                     <div class="mb-2">
                         <label class="form-label" for="strCOMMANDID">strCOMMANDID:</label>
                         <input class="form-control" type="text" id="strCOMMANDID" name="strCOMMANDID"
@@ -192,11 +168,183 @@
     </div>
     <!-- CONTROL FORM END -->
 </div>
-
+<!-- EXCEL MODAL START -->
+<div class="row">
+    <div class="modal fade" id="excelDataList" data-bs-keyboard="false" tabindex="-1" aria-labelledby="excelDataListLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="excelDataListLabel">STKMOVE EXCEL</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid table-responsive">
+                        <div id="excelFile"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- EXCEL MODAL END -->
 
 
 <script>
+    let $table = $('#table')
+    let logsData = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
 
+    function initTable() {
+        $table.bootstrapTable('destroy').bootstrapTable({
+            data: logsData,
+                columns: [
+                {
+                field: 'no',
+                title: 'No.',
+                align: 'center',
+                valign: 'middle'
+                }, {
+                field: 'data._FUNCTION',
+                title: 'Function',
+                align: 'center',
+                valign: 'middle'
+                }, {
+                field: 'data._strCOMMANDID',
+                title: 'COMMANDID',
+                align: 'center',
+                valign: 'middle',
+                sortable: true
+                },
+                {
+                field: 'data._strCARRIERID',
+                title: 'CARRIERID',
+                align: 'center',
+                valign: 'middle'
+                }, {
+                field: 'data._strFROMDEVICE',
+                title: 'FROMDEVICE/STKID',
+                align: 'center',
+                valign: 'middle'
+                }, {
+                field: 'data._strFROMPORT',
+                title: 'FROMPORT',
+                align: 'center',
+                valign: 'middle'
+                }, {
+                field: 'data._strFROMDEVICE',
+                title: 'FROMDEVICE/STKID',
+                align: 'center',
+                valign: 'middle'
+                }, {
+                field: 'data._strTODEVICE',
+                title: 'TODEVICE',
+                align: 'center',
+                valign: 'middle'
+                }, {
+                field: 'data._strTOPORT',
+                title: 'TOPORT',
+                align: 'center',
+                valign: 'middle'
+                }, {
+                field: 'data._strRESULT',
+                title: 'RESULT',
+                align: 'center',
+                valign: 'middle'
+                }, {
+                title: 'Details',
+                valign: 'middle',
+                formatter: detailFormatter
+                }
+            ]
+        })
+    }
+
+    $(function() {
+        initTable()
+        showfile()
+    })
+
+    // 讀取文件內容
+    function showfile() {
+        fetch('../static/batch_excel/eqmove.xlsx', {
+        }).then((res) => {
+            // console.log('object res', res);
+            return res.blob();
+        }).then((blob) => {
+            let reader = new FileReader();
+            
+            reader.readAsBinaryString(blob);
+            
+            reader.onload = function(e) {
+                let excelFile = ''
+                let data = e.target.result;
+                // console.log("DATA", data)
+                excelFile = XLSX.read(data, {
+                    type: 'binary'
+                });
+                // console.log("EXCELPATH2", excelFile)
+
+                //展示所有表
+                // for(let i=0;i<excelFile.SheetNames.length;i++){
+                // 	　document.getElementById("excelFile").innerHTML +=excelFile.SheetNames[i]+"="+JSON.stringify(XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[i]]))+"<br/>";
+                // 　　　　　　}
+
+                let dataTable1 = "";
+                //只展示第一個表
+                let headers = new Array();
+                let str = XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[0]])
+                // console.log("長度", str.length)
+                dataTable1+= "<table class='table table-striped table-lg'><tr>"
+                for(let key in str[0]){
+                    headers.push(key)  //獲取表頭
+                    dataTable1 += "<th>" + key + "</th>"
+                }
+                dataTable1 += "</tr>"
+                // console.log(headers)
+                //顯示行數
+                for(let i = 0; i < str.length ; i++){
+                    // let json = JSON.stringify(str[i])
+                    dataTable1 += "<tr>"
+                    let json = str[i]
+                    for( let j=0;j<headers.length;j++){
+                        dataTable1 += "<td>" + json[headers[j]] + "</td>";
+                    }
+                    dataTable1 += "</tr>";
+                }
+
+                dataTable1 += "</table>"
+                document.getElementById("excelFile").innerHTML = dataTable1
+            }
+        })
+    }
+
+    function detailFormatter(value, row, index) {
+        let str = ''
+
+        str += '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#a'+ row.data._strCOMMANDID +'">Details</button><div class="modal fade" id="a'+ row.data._strCOMMANDID +'" tabindex="-1" aria-labelledby="label_'+ row.data._strCOMMANDID +'" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title fs-3">Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">'
+        str += '<table class="table table-striped table-sm"><thead><tr><th scope="col">#</th><th scope="col">Key</th><th scope="col">Result</th></tr></thead><tbody>',
+        Object.keys(row.data).forEach((key, index) => {
+            str += '<tr>'
+            str += `<td>${index+1}</td>`
+            str += `<td>${key}</td>`
+            if( key == '_message_body' ) {
+                str += `<td><xmp class="text-wrap">${row.data[key]}</xmp></td>`
+            }else{
+                str += `<td>${row.data[key]}</td>`
+            }
+            
+            str += '</tr>'
+        })
+        str += '</tbody></table></div></div></div></div>'
+        return str
+    }
+
+
+    function update()
+    {
+        let newData = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
+        $table.bootstrapTable('load', newData)
+    }
+    
     $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
     idRefresh()
 
@@ -204,50 +352,8 @@
 
     let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || [];
 
-    updateLogs(dataList)
+    update()
 
-    function updateLogs(dataList) {
-        let datatables = document.querySelector('#datatables')
-
-        let str = ""
-
-        for (let i = 0; i < dataList.length; i++) {
-            let data_vehicleid = dataList[i].data._strVEHICLEID ? dataList[i].data._strVEHICLEID : ''
-            let data_result = dataList[i].data._strRESULT ? dataList[i].data._strRESULT : ''
-            let data_func = dataList[i].data._FUNCTION ? dataList[i].data._FUNCTION : ''
-            let data_cmdid = dataList[i].data._strCOMMANDID ? dataList[i].data._strCOMMANDID : ''
-            let data_carrierid = dataList[i].data._strCARRIERID ? dataList[i].data._strCARRIERID : ''
-            let data_fromdevice = dataList[i].data._strFROMDEVICE ? dataList[i].data._strFROMDEVICE : ''
-            let data_fromport = dataList[i].data._strFROMPORT ? dataList[i].data._strFROMPORT : ''
-            let data_todevice = dataList[i].data._strTODEVICE ? dataList[i].data._strTODEVICE : ''
-            let data_toport = dataList[i].data._strTOPORT ? dataList[i].data._strTOPORT : ''
-
-            str += '<tr> <td>' + dataList[i].no + '</td> <td>' + data_func + '</td> <td>' + data_cmdid + '</td> <td>' + data_carrierid + '</td>  <td>' + data_fromdevice + '</td> <td>' + data_fromport + '</td> <td>' + data_todevice + '</td> <td>' + data_toport + '</td> <td>' + data_vehicleid + '</td>'
-            // if( data_result == 'OK' ) {
-            // str += '<td class="bg-success">'+ data_result +'</td>'
-            // }else if( data_result == 'NG' ){
-            //     str += '<td class="bg-danger">'+ data_result +'</td>'
-            // }else {
-            str += '<td>' + data_result + '</td>'
-            // }
-            str += '<td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#' + data_func + '">Details</button><div class="modal fade" id="' + data_func + '" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title fs-3">Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body m-3">'
-            str += '<table class="table table-striped table-sm"><thead><tr><th scope="col">#</th><th scope="col">Key</th><th scope="col">Result</th></tr></thead><tbody>'
-            Object.keys(dataList[i].data).forEach((key, index) => {
-                str += '<tr>'
-                str += `<td>${index + 1}</td>`
-                str += `<td>${key}</td>`
-                if (key == '_message_body') {
-                    str += `<td><xmp class="text-wrap">${dataList[i].data[key]}</xmp></td>`
-                } else {
-                    str += `<td>${dataList[i].data[key]}</td>`
-                }
-
-                str += '</tr>'
-            })
-            str += '</tbody></table>'
-        }
-        datatables.innerHTML = str
-    }
 
     $('#receive_from_MES').click(
         function () {
@@ -298,7 +404,7 @@
 
             $.ajax({
                 type: "POST",
-                url: $SCRIPT_ROOT + "/send_eqmove_batch_function",
+                url: $SCRIPT_ROOT + "/send_stkmove_batch_function",
                 data: form_data,
                 success: (data) => {
                     if (data.length > 0) {
@@ -321,9 +427,9 @@
 
                     // const input = data.send_message_label
 
-                    let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || [];
+                    let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmov')) || [];
 
-                    updateLogs(dataList)
+                    update()
 
                     function fix_key(key) { return key.replace(/^send_/, '_'); }
 
@@ -342,7 +448,7 @@
 
                     console.log("POSTDATAORI", test)
 
-                    if (test.eqmove_batch_0 != '') {
+                    if (test.stkmove_batch_0 != '') {
                         let resendlog = Object.entries(test)
                         console.log("BATCHLOG", resendlog)
 
@@ -356,8 +462,8 @@
                             dataList.push(postdata)
                             console.log(typeof dataList)
                             console.log("BATCH", dataList)
-                            localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                            updateLogs(dataList)
+                            localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                            update()
                             postdata = ''
                         }
                     }
@@ -421,9 +527,9 @@
                         // const input = data.recv_message_label
                         // displayData(input)
                         if (data.recv_message_label != 'msmq no label') {
-                            let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
+                            let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || []
 
-                            updateLogs(dataList)
+                            update()
 
                             let test = removeEmptyField(data)
                             console.log("TESTDATA", test)
@@ -462,8 +568,8 @@
                                 // console.log("RESDATA：", resdata)
                                 dataList.push(resdata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                updateLogs(dataList)
+                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                update()
 
                                 resdata = ''
                             } else if (test.length == 2) {
@@ -476,8 +582,8 @@
                                 }
                                 dataList.push(resRecvdata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                updateLogs(dataList)
+                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                update()
                                 resRecvdata = ''
 
                                 let resSenddata = {
@@ -486,8 +592,8 @@
                                 }
                                 dataList.push(resSenddata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                updateLogs(dataList)
+                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                update()
                                 resSenddata = ''
 
                             }
@@ -558,7 +664,7 @@
                     //console.log(txt2)
                     let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || [];
 
-                    updateLogs(dataList)
+                    update()
 
                     function fix_key(key) { return key.replace(/^send_/, '_'); }
 
@@ -584,7 +690,7 @@
                     dataList.push(postdata)
                     console.log(typeof dataList)
                     localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                    updateLogs(dataList)
+                    update()
 
                     postdata = ''
                     idRefresh()
@@ -643,7 +749,7 @@
                         if (data.recv_message_label != 'msmq no label') {
                             let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
 
-                            updateLogs(dataList)
+                            update()
 
                             let test = removeEmptyField(data)
                             console.log("TESTDATA", test)
@@ -683,7 +789,7 @@
                                 dataList.push(resdata)
                                 console.log(typeof dataList)
                                 localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                updateLogs(dataList)
+                                update()
 
                                 resdata = ''
                             } else if (test.length == 2) {
@@ -697,7 +803,7 @@
                                 // dataList.push(resSenddata)
                                 // console.log(typeof dataList)
                                 // localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                // updateLogs(dataList)
+                                // update()
 
                                 // resSenddata = ''
 
@@ -708,7 +814,7 @@
                                 // dataList.push(resRecvdata)
                                 // console.log(typeof dataList)
                                 // localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                // updateLogs(dataList)
+                                // update()
                                 // resRecvdata = ''
                                 let resSenddata = {
                                     "no": dataList.length + 1,
@@ -717,7 +823,7 @@
                                 dataList.push(resSenddata)
                                 console.log(typeof dataList)
                                 localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                updateLogs(dataList)
+                                update()
                                 resSenddata = ''
 
                                 let resRecvdata = {
@@ -727,7 +833,7 @@
                                 dataList.push(resRecvdata)
                                 console.log(typeof dataList)
                                 localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                updateLogs(dataList)
+                                update()
                                 resRecvdata = ''
 
 
@@ -795,15 +901,10 @@
         return newObj
     }
 
-    function cleanup() {
+    function cleanup(){
         localStorage.removeItem('dataLogs_eqmove')
-
-        let datatables = document.querySelector('#datatables')
-
-        let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
-        let logstable = $("#datatables-reponsive").DataTable()
-        logstable.clear()
-        logstable.rows.add(dataList).draw()
+        let newData = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
+        $table.bootstrapTable('load', newData)
     }
 
 

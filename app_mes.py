@@ -891,6 +891,70 @@ def send_eqmove_batch_function():
     print(send_batch_eqmove_all_dict)
     return jsonify(send_batch_eqmove_all_dict)
 
+@app.route('/send_invdata_batch_function',methods=["GET","POST"])
+def send_eqmove_batch_function():
+    timeNow = datetime.datetime.now()
+    Time = timeNow.strftime("%Y/%m/%d %H:%M:%S")
+    print("i am in send_invdata_batch_function")
+    #test
+    batch_invdata_data_frame = pd.read_excel('./invdata.xlsx')
+    send_batch_invdata_all_dict={}
+    print(batch_invdata_data_frame)
+    for batch_invdata_data_frame_index in range(len(batch_invdata_data_frame)):
+        send_batch_invdata_dict={}
+        send_batch_invdata_dict_key="invdata_batch_"+str(batch_invdata_data_frame_index)
+        print("strCOMMANDID:"+str(batch_invdata_data_frame['strCOMMANDID'][batch_invdata_data_frame_index]))
+        print("strUSERID:"+str(batch_invdata_data_frame['strUSERID'][batch_invdata_data_frame_index]))
+        print("strSTKID:"+str(batch_invdata_data_frame['strSTKID'][batch_invdata_data_frame_index]))
+        print("strCMD:"+str(batch_invdata_data_frame['strCMD'][batch_invdata_data_frame_index]))
+        print("strMETHODNAME:"+str(batch_invdata_data_frame['strMETHODNAME'][batch_invdata_data_frame_index]))
+        print("strFORMNAME:"+str(batch_invdata_data_frame['strFORMNAME'][batch_invdata_data_frame_index]))
+        print("function is send")
+        if((str(batch_invdata_data_frame['strMETHODNAME'][batch_invdata_data_frame_index]))=="INVDATA"):
+            print("function is invdata")
+            INVDATA_xml_data = INVDATA.format(
+                IP=SendQueueIP,
+                QUEUE_NAME=SendQueueName,
+                CLIENT_HOSTNAME=HostName,
+                FUNCTION_VERSION=Version,
+                PROCESS_ID=PID,
+                TIMESTAMP=Time,
+                COMMANDID=str(batch_invdata_data_frame['strCOMMANDID'][batch_invdata_data_frame_index]),
+                USERID=str(batch_invdata_data_frame['strUSERID'][batch_invdata_data_frame_index]),
+                STKID=str(batch_invdata_data_frame['strSTKID'][batch_invdata_data_frame_index]))
+            print(INVDATA_xml_data)
+            send_batch_invdata_dict["status_of_send"] = send_batch_invdata_dict
+            send_batch_invdata_dict["send_message_label"] = "INVDATA"
+            send_batch_invdata_dict["send_message_body"] = INVDATA_xml_data
+            if(send_batch_invdata_dict["send_message_body"][0] == "<"):
+                root_send = etree.fromstring(send_batch_invdata_dict["send_message_body"])
+                if(len(root_send[1]) > 1):
+                    if(len(root_send[1][-1]) >= 1):
+                        if(root_send[1][-1][0].text =="INVDATA"):
+                            if(str(root_send[1][-1][0].text) == "INVDATA"):
+                                send_batch_invdata_dict["send_CLIENT_HOSTNAME"] = root_send[0][0].text
+                                send_batch_invdata_dict["send_FUNCTION"] = root_send[0][1].text
+                                send_batch_invdata_dict["send_SERVERNAME"] = root_send[0][2].text
+                                send_batch_invdata_dict["send_IP"] = root_send[0][3].text
+                                send_batch_invdata_dict["send_DLL_NAME"] = root_send[0][4].text
+                                send_batch_invdata_dict["send_FUNCTION_VERSION"] = root_send[0][5].text
+                                send_batch_invdata_dict["send_CLASSNAME"] = root_send[0][6].text
+                                send_batch_invdata_dict["send_PROCESS_ID"] = root_send[0][7].text
+                                send_batch_invdata_dict["send_QUEUE_NAME"] = root_send[0][8].text
+                                send_batch_invdata_dict["send_LANG"] = root_send[0][9].text
+                                send_batch_invdata_dict["send_TIMESTAMP"] = root_send[0][10].text
+                                send_batch_invdata_dict["send_strCOMMANDID"] = root_send[1][0].text
+                                send_batch_invdata_dict["send_strUSERID"] = root_send[1][1].text
+                                send_batch_invdata_dict["send_strSTKID"] = root_send[1][2].text
+                                send_batch_invdata_dict["send_strMETHODNAME"] = root_send[1][-1][0].text
+                                send_batch_invdata_dict["send_strFORNAME"] = root_send[1][-1][1].text
+                                send_batch_invdata_dict["send_strCMD"] = root_send[1][-1][2].text
+        send_batch_invdata_all_dict[send_batch_invdata_dict_key]=send_batch_invdata_dict
+        print("delay:"+str(batch_invdata_data_frame['delay'][batch_invdata_data_frame_index])+"second")
+        time.sleep(batch_invdata_data_frame['delay'][batch_invdata_data_frame_index])
+    print(send_batch_invdata_all_dict)
+    return jsonify(send_batch_invdata_all_dict)
+
 
 
 
