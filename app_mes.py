@@ -897,7 +897,7 @@ def send_invdata_batch_function():
     Time = timeNow.strftime("%Y/%m/%d %H:%M:%S")
     print("i am in send_invdata_batch_function")
     #test
-    batch_invdata_data_frame = pd.read_excel('./invdata.xlsx')
+    batch_invdata_data_frame = pd.read_excel('./static/batch_excel/invdata.xlsx')
     send_batch_invdata_all_dict={}
     print(batch_invdata_data_frame)
     for batch_invdata_data_frame_index in range(len(batch_invdata_data_frame)):
