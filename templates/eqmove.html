@@ -33,31 +33,23 @@
                 </div>
             </div>
             <div class="card-body pt-0">
-                <table
-                id="table"
-                data-toolbar="#toolbar"
-                data-search="true"
-                data-show-toggle="true"
-                data-show-fullscreen="true"
-                data-show-pagination-switch="true"
-                data-pagination="true"
-                data-id-field="id"
-                data-page-list="[10, 25, 50, 100, all]"
-                >
-                <thead>
-                    <tr>
-                        <th class="col-1" data-field="no">No.</th>
-                        <th data-field="data._FUNCTION">Function</th>
-                        <th data-field="data._strCOMMANDID">COMMANDID</th>
-                        <th data-field="data._strCARRIERID">CARRIERID</th>
-                        <th data-field="data._strFROMDEVICE">FROMDEVICE/STKID</th>
-                        <th data-field="data._strFROMPORT">FROMPORT</th>
-                        <th data-field="data._strTODEVICE">TODEVICE</th>
-                        <th data-field="data._strTOPORT">TOPORT</th>
-                        <th data-field="data._strRESULT">RESULT</th>
-                        <th data-field="">Details</th>
-                    </tr>
-                </thead>
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-toggle="true"
+                    data-show-fullscreen="true" data-show-pagination-switch="true" data-pagination="true"
+                    data-id-field="id" data-page-list="[10, 25, 50, 100, all]">
+                    <thead>
+                        <tr>
+                            <th class="col-1" data-field="no">No.</th>
+                            <th data-field="data._FUNCTION">Function</th>
+                            <th data-field="data._strCOMMANDID">COMMANDID</th>
+                            <th data-field="data._strCARRIERID">CARRIERID</th>
+                            <th data-field="data._strFROMDEVICE">FROMDEVICE/STKID</th>
+                            <th data-field="data._strFROMPORT">FROMPORT</th>
+                            <th data-field="data._strTODEVICE">TODEVICE</th>
+                            <th data-field="data._strTOPORT">TOPORT</th>
+                            <th data-field="data._strRESULT">RESULT</th>
+                            <th data-field="">Details</th>
+                        </tr>
+                    </thead>
                 </table>
             </div>
         </div>
@@ -71,7 +63,8 @@
                     <div class="mb-2">
                         <label class="form-label fw-bolder">Batch Processing:</label>
                         <button id="batch" type="button" class="btn btn-primary w-100 mt-2">Batch</button>
-                        <button type="button" class="btn btn-primary w-100 mt-2" data-bs-toggle="modal" data-bs-target="#excelDataList">LAUNCH EXCEL</button>
+                        <button type="button" class="btn btn-primary w-100 mt-2" data-bs-toggle="modal"
+                            data-bs-target="#excelDataList">LAUNCH EXCEL</button>
                     </div>
                 </div>
             </div>
@@ -170,7 +163,8 @@
 </div>
 <!-- EXCEL MODAL START -->
 <div class="row">
-    <div class="modal fade" id="excelDataList" data-bs-keyboard="false" tabindex="-1" aria-labelledby="excelDataListLabel" aria-hidden="true">
+    <div class="modal fade" id="excelDataList" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="excelDataListLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -196,69 +190,69 @@
     function initTable() {
         $table.bootstrapTable('destroy').bootstrapTable({
             data: logsData,
-                columns: [
+            columns: [
                 {
-                field: 'no',
-                title: 'No.',
-                align: 'center',
-                valign: 'middle'
+                    field: 'no',
+                    title: 'No.',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._FUNCTION',
-                title: 'Function',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._FUNCTION',
+                    title: 'Function',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strCOMMANDID',
-                title: 'COMMANDID',
-                align: 'center',
-                valign: 'middle',
-                sortable: true
+                    field: 'data._strCOMMANDID',
+                    title: 'COMMANDID',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
                 },
                 {
-                field: 'data._strCARRIERID',
-                title: 'CARRIERID',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strCARRIERID',
+                    title: 'CARRIERID',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strFROMDEVICE',
-                title: 'FROMDEVICE/STKID',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strFROMDEVICE',
+                    title: 'FROMDEVICE/STKID',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strFROMPORT',
-                title: 'FROMPORT',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strFROMPORT',
+                    title: 'FROMPORT',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strFROMDEVICE',
-                title: 'FROMDEVICE/STKID',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strFROMDEVICE',
+                    title: 'FROMDEVICE/STKID',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strTODEVICE',
-                title: 'TODEVICE',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strTODEVICE',
+                    title: 'TODEVICE',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strTOPORT',
-                title: 'TOPORT',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strTOPORT',
+                    title: 'TOPORT',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strRESULT',
-                title: 'RESULT',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strRESULT',
+                    title: 'RESULT',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                title: 'Details',
-                valign: 'middle',
-                formatter: detailFormatter
+                    title: 'Details',
+                    valign: 'middle',
+                    formatter: detailFormatter
                 }
             ]
         })
     }
 
-    $(function() {
+    $(function () {
         initTable()
         showfile()
     })
@@ -271,10 +265,10 @@
             return res.blob();
         }).then((blob) => {
             let reader = new FileReader();
-            
+
             reader.readAsBinaryString(blob);
-            
-            reader.onload = function(e) {
+
+            reader.onload = function (e) {
                 let excelFile = ''
                 let data = e.target.result;
                 // console.log("DATA", data)
@@ -293,19 +287,19 @@
                 let headers = new Array();
                 let str = XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[0]])
                 // console.log("長度", str.length)
-                dataTable1+= "<table class='table table-striped table-lg'><tr>"
-                for(let key in str[0]){
+                dataTable1 += "<table class='table table-striped table-lg'><tr>"
+                for (let key in str[0]) {
                     headers.push(key)  //獲取表頭
                     dataTable1 += "<th>" + key + "</th>"
                 }
                 dataTable1 += "</tr>"
                 // console.log(headers)
                 //顯示行數
-                for(let i = 0; i < str.length ; i++){
+                for (let i = 0; i < str.length; i++) {
                     // let json = JSON.stringify(str[i])
                     dataTable1 += "<tr>"
                     let json = str[i]
-                    for( let j=0;j<headers.length;j++){
+                    for (let j = 0; j < headers.length; j++) {
                         dataTable1 += "<td>" + json[headers[j]] + "</td>";
                     }
                     dataTable1 += "</tr>";
@@ -320,31 +314,30 @@
     function detailFormatter(value, row, index) {
         let str = ''
 
-        str += '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#a'+ row.data._strCOMMANDID +'">Details</button><div class="modal fade" id="a'+ row.data._strCOMMANDID +'" tabindex="-1" aria-labelledby="label_'+ row.data._strCOMMANDID +'" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title fs-3">Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">'
+        str += '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#a' + row.data._strCOMMANDID + '">Details</button><div class="modal fade" id="a' + row.data._strCOMMANDID + '" tabindex="-1" aria-labelledby="label_' + row.data._strCOMMANDID + '" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title fs-3">Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">'
         str += '<table class="table table-striped table-sm"><thead><tr><th scope="col">#</th><th scope="col">Key</th><th scope="col">Result</th></tr></thead><tbody>',
-        Object.keys(row.data).forEach((key, index) => {
-            str += '<tr>'
-            str += `<td>${index+1}</td>`
-            str += `<td>${key}</td>`
-            if( key == '_message_body' ) {
-                str += `<td><xmp class="text-wrap">${row.data[key]}</xmp></td>`
-            }else{
-                str += `<td>${row.data[key]}</td>`
-            }
-            
-            str += '</tr>'
-        })
+            Object.keys(row.data).forEach((key, index) => {
+                str += '<tr>'
+                str += `<td>${index + 1}</td>`
+                str += `<td>${key}</td>`
+                if (key == '_message_body') {
+                    str += `<td><xmp class="text-wrap">${row.data[key]}</xmp></td>`
+                } else {
+                    str += `<td>${row.data[key]}</td>`
+                }
+
+                str += '</tr>'
+            })
         str += '</tbody></table></div></div></div></div>'
         return str
     }
 
 
-    function update()
-    {
+    function update() {
         let newData = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
         $table.bootstrapTable('load', newData)
     }
-    
+
     $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
     idRefresh()
 
@@ -404,7 +397,7 @@
 
             $.ajax({
                 type: "POST",
-                url: $SCRIPT_ROOT + "/send_stkmove_batch_function",
+                url: $SCRIPT_ROOT + "/send_eqmove_batch_function",
                 data: form_data,
                 success: (data) => {
                     if (data.length > 0) {
@@ -901,7 +894,7 @@
         return newObj
     }
 
-    function cleanup(){
+    function cleanup() {
         localStorage.removeItem('dataLogs_eqmove')
         let newData = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
         $table.bootstrapTable('load', newData)
