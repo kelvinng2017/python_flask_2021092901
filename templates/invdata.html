@@ -34,12 +34,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table
-                id="excelFile"
-                data-pagination="true"
-                data-id-field="id"
-                data-page-list="[10, 25, 50, 100, all]"
-                >
+                <table id="excelFile" data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, all]">
                     <thead>
                         <tr>
                             <th data-field="strCOMMANDID">strCOMMANDID</th>
@@ -67,17 +62,9 @@
                 </div>
             </div>
             <div class="card-body pt-0">
-                <table 
-                id="table" 
-                data-toolbar="#toolbar" 
-                data-search="true" 
-                data-show-toggle="true"
-                data-show-fullscreen="true" 
-                data-show-pagination-switch="true" 
-                data-pagination="true"
-                data-id-field="id" 
-                data-page-list="[10, 25, 50, 100, all]"
-                >
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-toggle="true"
+                    data-show-fullscreen="true" data-show-pagination-switch="true" data-pagination="true"
+                    data-id-field="id" data-page-list="[10, 25, 50, 100, all]">
                 </table>
             </div>
         </div>
@@ -92,8 +79,11 @@
                         <label class="form-label fw-bolder">Batch Processing:</label>
                         <button id="batch" type="button" class="btn btn-primary w-100 mt-2">Batch</button>
                         <hr>
-                        <button type="button" class="btn btn-primary w-100" onclick="xFile.click()">Launch Excel</button>
-                        <input type="file" id="xFile" style="display: none" name="" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="showfile(this)">
+                        <button type="button" class="btn btn-primary w-100" onclick="xFile.click()">Launch
+                            Excel</button>
+                        <input type="file" id="xFile" style="display: none" name=""
+                            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                            onchange="showfile(this)">
                     </div>
                 </div>
             </div>
@@ -114,7 +104,14 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strSTKID">strSTKID:</label>
-                        <input class="form-control" type="text" id="strSTKID" name="strSTKID" value="ER-A01">
+                        <!--<input class="form-control" type="text" id="strSTKID" name="strSTKID" value="ER-A01">-->
+                        <select type="submit" name="strSTKID" id="strSTKID_selected" class="form-select">
+                            <option value="{{stk_dict['strSTKID'][0]}}" selected>
+                                {{stk_dict["strSTKID"][0]}}</option>
+                            {% for strSTKID in stk_dict["strSTKID"][1:] %}
+                            <option value="{{strSTKID}}" id="hope_id">{{strSTKID}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strMETHODNAME">strMETHODNAME:</label>
@@ -307,7 +304,7 @@
             var form_data = new FormData();
             form_data.append('strCOMMANDID', $("#strCOMMANDID").val());
             form_data.append('strUSERID', $("#strUSERID").val());
-            form_data.append('strSTKID', $("#strSTKID").val());
+            form_data.append('strSTKID', $("#strSTKID_selected").val());
             form_data.append('strMETHODNAME', $("#strMETHODNAME").val());
             form_data.append('strFORMNAME', $("#strFORMNAME").val());
             form_data.append('strCMD', $("#strCMD").val());

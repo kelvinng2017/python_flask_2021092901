@@ -34,12 +34,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table
-                id="excelFile"
-                data-pagination="true"
-                data-id-field="id"
-                data-page-list="[10, 25, 50, 100, all]"
-                >
+                <table id="excelFile" data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, all]">
                     <thead>
                         <tr>
                             <th data-field="strCARRIERTYPE">strCARRIERTYPE</th>
@@ -74,17 +69,9 @@
                 </div>
             </div>
             <div class="card-body pt-0">
-                <table 
-                id="table" 
-                data-toolbar="#toolbar" 
-                data-search="true" 
-                data-show-toggle="true"
-                data-show-fullscreen="true" 
-                data-show-pagination-switch="true" 
-                data-pagination="true"
-                data-id-field="id" 
-                data-page-list="[10, 25, 50, 100, all]"
-                >
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-toggle="true"
+                    data-show-fullscreen="true" data-show-pagination-switch="true" data-pagination="true"
+                    data-id-field="id" data-page-list="[10, 25, 50, 100, all]">
                 </table>
             </div>
         </div>
@@ -99,8 +86,11 @@
                         <label class="form-label fw-bolder">Batch Processing:</label>
                         <button id="batch" type="button" class="btn btn-primary w-100 mt-2">Batch</button>
                         <hr>
-                        <button type="button" class="btn btn-primary w-100" onclick="xFile.click()">Launch Excel</button>
-                        <input type="file" id="xFile" style="display: none" name="" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="showfile(this)">
+                        <button type="button" class="btn btn-primary w-100" onclick="xFile.click()">Launch
+                            Excel</button>
+                        <input type="file" id="xFile" style="display: none" name=""
+                            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                            onchange="showfile(this)">
                     </div>
                 </div>
             </div>
@@ -126,8 +116,15 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strCARRIERID">strCARRIERID:</label>
-                        <input type="text" id="strCARRIERRID" name="strCARRIERRID" class="form-control"
-                            value="ER-A01-01">
+                        <!--<input type="text" id="strCARRIERRID" name="strCARRIERRID" class="form-control"
+                            value="ER-A01-01">-->
+                        <select type="submit" name="strCARRIERRID" id="strCARRIERRID_selected" class="form-select">
+                            <option value="{{stk_dict['strCARRIERID'][0]}}" selected>
+                                {{stk_dict["strCARRIERID"][0]}}</option>
+                            {% for strCARRIERID in stk_dict["strCARRIERID"][1:] %}
+                            <option value="{{strCARRIERID}}" id="hope_id">{{strCARRIERID}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strFROMDEVICE">strFROMDEVICE:</label>
@@ -161,12 +158,26 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strT0PORT">strTOPORT:</label>
-                        <input type="text" id="strTOPORT" name="strTOPORT" class="form-control"
-                            value={{stk_dict["strTOPORT"]}}>
+                        <!--<input type="text" id="strTOPORT" name="strTOPORT" class="form-control"
+                            value={{stk_dict["strTOPORT"]}}>-->
+                        <select type="submit" name="strTOPORT" id="strTOPORT_selected" class="form-select">
+                            <option value="{{stk_dict['strTOPORT'][0]}}" selected>
+                                {{stk_dict["strTOPORT"][0]}}</option>
+                            {% for strTOPORT in stk_dict["strTOPORT"][1:] %}
+                            <option value="{{strTOPORT}}" id="hope_id">{{strTOPORT}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strEMPTYCARRIER">strEMPTYCARRIER:</label>
-                        <input type="text" id="strEMPTYCARRIER" name="strEMPTYCARRIER" class="form-control" value="ON">
+                        <!--<input type="text" id="strEMPTYCARRIER" name="strEMPTYCARRIER" class="form-control" value="ON">-->
+                        <select type="submit" name="strEMPTYCARRIER" id="strEMPTYCARRIER_selected" class="form-select">
+                            <option value="{{stk_dict['strEMPTYCARRIER'][0]}}" selected>
+                                {{stk_dict["strEMPTYCARRIER"][0]}}</option>
+                            {% for strEMPTYCARRIER in stk_dict["strEMPTYCARRIER"][1:] %}
+                            <option value="{{strEMPTYCARRIER}}" id="hope_id">{{strEMPTYCARRIER}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strPRIORITY">strPRIORITY:</label>
@@ -204,14 +215,14 @@
     let $batchTable = $('#excelFile')
     let logsData = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || []
 
-    function batchTable(data){
+    function batchTable(data) {
         // console.log("TABLE", data)
-        $batchTable.bootstrapTable('destroy').bootstrapTable({data: data})
+        $batchTable.bootstrapTable('destroy').bootstrapTable({ data: data })
         $('#excelTable').removeClass('d-none')
         data = ''
     }
 
-    function closeExcel(){
+    function closeExcel() {
         $('#excelTable').addClass('d-none')
     }
 
@@ -285,16 +296,16 @@
     })
 
     // 讀取文件內容
-    let excelFile =''
+    let excelFile = ''
     // 讀取文件內容
     function showfile(obj) {
-        if(!obj.files) {
+        if (!obj.files) {
             return
         }
         let f = obj.files[0]
         let reader = new FileReader()
         reader.readAsBinaryString(f)
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             let data = e.target.result
             // console.log("DATA", data)
             excelFile = XLSX.read(data, {
@@ -321,7 +332,7 @@
             // console.log(headers)
             //顯示行數
             // for(let i = 0; i < str.length ; i++){
-                // let json = JSON.stringify(str[i])
+            // let json = JSON.stringify(str[i])
             //     dataTable1 += "<tr>"
             //     let json = str[i]
             //     for( let j=0;j<headers.length;j++){
@@ -335,7 +346,7 @@
 
             obj.value = ''
         }
-        excelFile =''
+        excelFile = ''
     }
 
     function detailFormatter(value, row, index) {
@@ -370,7 +381,7 @@
     //console.log("strFROMDEVICE:" + $('#strFROMDEVICE_selected').val());
     //console.log("strFROMPORT:" + $('#strFROMPORT_selected').val());
 
-    $("#strCARRIERRID").val(($('#strFROMDEVICE_selected').val()) + "-" + ($('#strFROMPORT_selected').val()));
+
 
     let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || [];
 
@@ -663,13 +674,13 @@
             var form_data = new FormData();
             form_data.append('strCOMMANDID', $("#strCOMMANDID").val());
             form_data.append('strUSERID', $("#strUSERID").val());
-            form_data.append('strCARRIERRID', $("#strCARRIERRID").val());
+            form_data.append('strCARRIERRID', $("#strCARRIERRID_selected").val());
             form_data.append('strCARRIERTYPE', $("#strCARRIERTYPE").val());
             form_data.append('strFROMDEVICE', $("#strFROMDEVICE_selected").val());
             form_data.append('strFROMPORT', $("#strFROMPORT_selected").val());
             form_data.append('strTODEVICE', $("#strTODEVICE_selected").val());
-            form_data.append('strTOPORT', $("#strTOPORT").val());
-            form_data.append('strEMPTYCARRIER', $("#strEMPTYCARRIER").val());
+            form_data.append('strTOPORT', $("#strTOPORT_selected").val());
+            form_data.append('strEMPTYCARRIER', $("#strEMPTYCARRIER_selected").val());
             form_data.append('strPRIORITY', $("#strPRIORITY").val());
             form_data.append('strMETHODNAME', $("#strMETHODNAME").val());
             form_data.append('strFORMNAME', $("#strFORMNAME").val());
@@ -932,18 +943,7 @@
 
 
 
-    $(() => {
-        $('#strFROMDEVICE_selected').change(() => {
-            $("#strCARRIERRID").val(($('#strFROMDEVICE_selected').val()) + "-" + ($('#strFROMPORT_selected').val()));
 
-        });
-    });
-    $(() => {
-        $('#strFROMPORT_selected').change(() => {
-            $("#strCARRIERRID").val(($('#strFROMDEVICE_selected').val()) + "-" + ($('#strFROMPORT_selected').val()));
-
-        });
-    });
 
 
     function PrefixInteger(num, length) {

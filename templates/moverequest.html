@@ -19,7 +19,7 @@
     </div>
 </div>
 <div class="row">
-<!-- LOGS TABLE START -->
+    <!-- LOGS TABLE START -->
     <div class="col-10">
         <!-- EXCEL LAUNCH START -->
         <div id="excelTable" class="card d-none">
@@ -34,12 +34,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table
-                id="excelFile"
-                data-pagination="true"
-                data-id-field="id"
-                data-page-list="[10, 25, 50, 100, all]"
-                >
+                <table id="excelFile" data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, all]">
                     <thead>
                         <tr>
                             <th data-field="strCARRIERTYPE">strCARRIERTYPE</th>
@@ -74,23 +69,15 @@
                 </div>
             </div>
             <div class="card-body pt-0">
-                <table 
-                id="table" 
-                data-toolbar="#toolbar" 
-                data-search="true" 
-                data-show-toggle="true"
-                data-show-fullscreen="true" 
-                data-show-pagination-switch="true" 
-                data-pagination="true"
-                data-id-field="id" 
-                data-page-list="[10, 25, 50, 100, all]"
-                >
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-toggle="true"
+                    data-show-fullscreen="true" data-show-pagination-switch="true" data-pagination="true"
+                    data-id-field="id" data-page-list="[10, 25, 50, 100, all]">
                 </table>
             </div>
         </div>
     </div>
-<!-- LOGS TABLE END -->
-<!-- CONTROL FORM START -->
+    <!-- LOGS TABLE END -->
+    <!-- CONTROL FORM START -->
     <div class="col-2">
         <div class="card">
             <div class="card-body py-3">
@@ -110,45 +97,71 @@
                     <label class="form-label fw-bolder">Input:</label>
                     <div class="mb-2">
                         <label class="form-label" for="strCOMMANDID">strCOMMANDID:</label>
-                        <input class="form-control" type="text" id="strCOMMANDID" name="strCOMMANDID" value={{stk_dict["strCOMAND"]}}>
+                        <input class="form-control" type="text" id="strCOMMANDID" name="strCOMMANDID"
+                            value={{stk_dict["strCOMAND"]}}>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strUSERID">strUSERID:</label>
-                        <input class="form-control" type="text" id="strUSERID" name="strUSERID" value={{stk_dict["strUSERID"]}}>
+                        <input class="form-control" type="text" id="strUSERID" name="strUSERID"
+                            value={{stk_dict["strUSERID"]}}>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strCARRIERID">strCARRIERID:</label>
                         <select class="form-select" type="submit" name="strCARRIERRID" id="strCARRIERRID_selected">
-                            <option value="{{stk_dict['strCARRIERRID'][0]}}" selected>{{stk_dict["strCARRIERRID"][0]}}</option>
-                            {% for strCARRIERRID in stk_dict["strCARRIERRID"][1:] %}
-                            <option value="{{strCARRIERRID}}" id="hope_id">{{strCARRIERRID}}</option>
+                            <option value="{{stk_dict['strCARRIERID'][0]}}" selected>{{stk_dict["strCARRIERID"][0]}}
+                            </option>
+                            {% for strCARRIERID in stk_dict["strCARRIERID"][1:] %}
+                            <option value="{{strCARRIERID}}" id="hope_id">{{strCARRIERID}}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strCARRIERTYPE">strCARRIERTYPE:</label>
-                        <input class="form-control" type="text" id="strCARRIERTYPE" name="strCARRIERTYPE" value="MAGAZINE">
+                        <input class="form-control" type="text" id="strCARRIERTYPE" name="strCARRIERTYPE"
+                            value="MAGAZINE">
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strFROMDEVICE">strFROMDEVICE:</label>
                         <select class="form-select" type="submit" name="strFROMDEVICE" id="strFROMDEVICE_selected">
-                            <option value="{{stk_dict['strFROMDEVICE'][0]}}" selected>{{stk_dict["strFROMDEVICE"][0]}}</option>
-                            {% for strTODEVICE in stk_dict["strFROMDEVICE"][1:] %}
+                            <option value="{{stk_dict['strFROMDEVICE'][0]}}" selected>{{stk_dict["strFROMDEVICE"][0]}}
+                            </option>
+                            {% for strFROMDEVICE in stk_dict["strFROMDEVICE"][1:] %}
                             <option value="{{strFROMDEVICE}}" id="hope_id">{{strFROMDEVICE}}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strFROMPORT">strFROMPORT:</label>
-                        <input class="form-control" type="text" id="strFROMPORT" name="strFROMPORT" value="1234">
+                        <!--<input class="form-control" type="text" id="strFROMPORT" name="strFROMPORT" value="1234">-->
+                        <select class="form-select" type="submit" name="strFROMPORT" id="strFROMPORT">
+                            <option value="{{stk_dict['strFROMPORT'][0]}}" selected>{{stk_dict["strFROMPORT"][0]}}
+                            </option>
+                            {% for strFROMPORT in stk_dict["strFROMPORT"][1:] %}
+                            <option value="{{strFROMPORT}}" id="hope_id">{{strFROMPORT}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strTODEVICE">strTODEVICE:</label>
-                        <input class="form-control" type="text" id="strTODEVICE" name="strTODEVICE" value="ER-A01">
+                        <!--<input class="form-control" type="text" id="strTODEVICE" name="strTODEVICE" value="ER-A01">-->
+                        <select class="form-select" type="submit" name="strTODEVICE" id="strTODEVICE">
+                            <option value="{{stk_dict['strTODEVICE'][0]}}" selected>{{stk_dict["strTODEVICE"][0]}}
+                            </option>
+                            {% for strTODEVICE in stk_dict["strTODEVICE"][1:] %}
+                            <option value="{{strTODEVICE}}" id="hope_id">{{strTODEVICE}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strT0PORT">strTOPORT:</label>
-                        <input class="form-control" type="text" id="strTOPORT" name="strTOPORT" value="02">
+                        <!--<input class="form-control" type="text" id="strTOPORT" name="strTOPORT" value="02">-->
+                        <select class="form-select" type="submit" name="strTOPORT" id="strTOPORT">
+                            <option value="{{stk_dict['strTOPORT'][0]}}" selected>{{stk_dict["strTOPORT"][0]}}
+                            </option>
+                            {% for strTOPORT in stk_dict["strTOPORT"][1:] %}
+                            <option value="{{strTOPORT}}" id="hope_id">{{strTOPORT}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strPRIORITY">strPRIORITY:</label>
@@ -156,29 +169,33 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strMETHODNAME">strMETHODNAME:</label>
-                        <input class="form-control" type="text" id="strMETHODNAME" name="strMETHODNAME" value={{stk_dict["strFunction"]}}>
+                        <input class="form-control" type="text" id="strMETHODNAME" name="strMETHODNAME"
+                            value={{stk_dict["strFunction"]}}>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strFORMNAME">strFORMNAME:</label>
-                        <input class="form-control" type="text" id="strFORMNAME" name="strFORMNAME" value={{stk_dict["strFORNAME"]}}>
+                        <input class="form-control" type="text" id="strFORMNAME" name="strFORMNAME"
+                            value={{stk_dict["strFORNAME"]}}>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strCMD">strCMD:</label>
-                        <input class="form-control" type="text" id="strCMD" name="strCMD" value={{stk_dict["strFunction"]}}>
+                        <input class="form-control" type="text" id="strCMD" name="strCMD"
+                            value={{stk_dict["strFunction"]}}>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" class="form-label" for="" form-label>　</label>
-                        <button id="send_to_ACS_Getway" type="button" class="btn btn-primary w-100">send_to_ACS_Getway</button>
+                        <button id="send_to_ACS_Getway" type="button"
+                            class="btn btn-primary w-100">send_to_ACS_Getway</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<!-- CONTROL FORM END -->
+    <!-- CONTROL FORM END -->
 </div>
 
 
-    <script type=text/javascript>
+<script type=text/javascript>
     let $table = $('#table')
     let $batchTable = $('#excelFile')
     let logsData = JSON.parse(localStorage.getItem('dataLogs_moverequest')) || []
@@ -663,4 +680,4 @@
 
         });
     </script>
-    {% endblock %}
+{% endblock %}

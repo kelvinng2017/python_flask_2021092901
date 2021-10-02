@@ -47,9 +47,12 @@ HostName = os.getenv('COMPUTERNAME')  # MES主機的名字
 Version = '1.6'  # 版本號碼
 PID = '00000000'  # 隨便設定的PROCESS_ID
 shelf_name_list = data.get('shelf_name_list')#讀取貨架list
-shelf_port_list = data.get('shelf_port_list')#讀取貨架list_port
+shelf_from_port_list = data.get('shelf_from_port_list')#讀取貨架list_port
+shelf_to_port_list = data.get('shelf_to_port_list')#讀取貨架list_port
 machine_name_list = data.get('machine_name_list')#讀取機台的name
 machine_port_list = data.get('machine_port_list')#讀取機台的port
+carrierid_list = data.get('carrierid_list') #讀取貨物的名稱
+emptycarrier_list = data.get('emptycarrier_list') #讀取emptycarrier_list名稱
 f.close()  # 關閉json讀取
 
 
@@ -156,19 +159,28 @@ def stkmove_new(strFunction):
     strFROMDEVICE_list=[] #存貨架的list
     strFROMPORT_list=[] #存貨架的port
     strTODEVICE_list = []  # 存機台的list
-    strTOPORT_list = machine_port_list[0].encode('utf-8') #存機台的port
+    strTOPORT_list = [] #存機台的list
+    strCARRIERID_list = [] #存貨物的list
+    strEMPTYCARRIER_list = [] #存EMPTYCARRIER_listlist
 
 
     for strFROMDEVICE_list_index in range(len(shelf_name_list)):
         strFROMDEVICE_list.append((shelf_name_list[strFROMDEVICE_list_index]).encode('utf-8'))
 
-    for strFROMPORT_list_index in range(len(shelf_port_list)):
-         strFROMPORT_list.append((shelf_port_list[strFROMPORT_list_index]).encode('utf-8'))
+    for strFROMPORT_list_index in range(len(shelf_from_port_list)):
+         strFROMPORT_list.append((shelf_from_port_list[strFROMPORT_list_index]).encode('utf-8'))
     
     for strTODEVICE_list_index in range(len(machine_name_list)):
         strTODEVICE_list.append((machine_name_list[strTODEVICE_list_index]).encode('utf-8'))
 
+    for strTOPORT_list_index in range(len(machine_port_list)):
+        strTOPORT_list.append((machine_port_list[strTOPORT_list_index]).encode('utf-8'))
+
+    for strCARRIERID_list_index in range(len(carrierid_list)):
+        strCARRIERID_list.append((carrierid_list[strCARRIERID_list_index]).encode('utf-8'))
     
+    for strEMPTYCARRIER_list_index in range(len(emptycarrier_list)):
+        strEMPTYCARRIER_list.append((emptycarrier_list[strEMPTYCARRIER_list_index]).encode('utf-8'))
     
     stk_dict = {
         "strFROMDEVICE":strFROMDEVICE_list,#貨架name_list
@@ -178,7 +190,9 @@ def stkmove_new(strFunction):
         "strFORNAME": "ACS",  # 不知道是什麽，文件就這樣設定
         "strUSERID": user_id,  # 使用者id
         "strTODEVICE": strTODEVICE_list,  # 將機台存放在stk_dict的字典,key值是strTODEVICE
-        "strTOPORT":strTOPORT_list
+        "strTOPORT":strTOPORT_list, #機台的port list
+        "strCARRIERID":strCARRIERID_list,#存放貨品的list
+        "strEMPTYCARRIER":strEMPTYCARRIER_list #存放EMPTYCARRIER_list的list
     }
     # 以字典的形式傳給html的jinja
     return render_template('stkmove_new.html', stk_dict=stk_dict)
@@ -187,18 +201,30 @@ def stkmove_new(strFunction):
 @app.route('/eqmove/<strFunction>', methods=['GET', 'POST'])  # eqmove路由
 def eqmove(strFunction):
     strFROMDEVICE_list=[] #存機台的list 
-    strFROMPORT_list=machine_port_list[0].encode('utf-8')#存機台的port
+    strFROMPORT_list = [] 
     strTODEVICE_list = [] #存貨架的list
     strTOPORT_list = [] #存貨架的port
+    strCARRIERID_list = [] #存貨物的list
+    strEMPTYCARRIER_list = [] #存EMPTYCARRIER_listlist
 
     for strFROMDEVICE_list_index in range(len(machine_name_list)):
         strFROMDEVICE_list.append((machine_name_list[strFROMDEVICE_list_index]).encode('utf-8'))
 
+    for strFROMPORT_list_index in range(len(machine_port_list)):
+        strFROMPORT_list.append((machine_port_list[strFROMPORT_list_index]).encode('utf-8'))
+
     for strTODEVICE_list_index in range(len(shelf_name_list)):
         strTODEVICE_list.append((shelf_name_list[strTODEVICE_list_index]).encode('utf-8'))
 
-    for strTOPORT_list_index in range(len(shelf_port_list)):
-        strTOPORT_list.append((shelf_port_list[strTOPORT_list_index]).encode('utf-8'))
+    for strTOPORT_list_index in range(len(shelf_to_port_list)):
+        strTOPORT_list.append((shelf_to_port_list[strTOPORT_list_index]).encode('utf-8'))
+
+    for strCARRIERID_list_index in range(len(carrierid_list)):
+        strCARRIERID_list.append((carrierid_list[strCARRIERID_list_index]).encode('utf-8'))
+    
+    for strEMPTYCARRIER_list_index in range(len(emptycarrier_list)):
+        strEMPTYCARRIER_list.append((emptycarrier_list[strEMPTYCARRIER_list_index]).encode('utf-8'))
+
     stk_dict = {
         "strFunction": strFunction,  # function
         "strCOMAND": commandid,  # 流水號
@@ -208,6 +234,8 @@ def eqmove(strFunction):
         "strFROMPORT":strFROMPORT_list,
         "strTODEVICE":strTODEVICE_list,
         "strTOPORT":strTOPORT_list,
+        "strCARRIERID":strCARRIERID_list,
+        "strEMPTYCARRIER":strEMPTYCARRIER_list
 
     }
     # 以字典的形式傳給html的jinja
@@ -218,6 +246,14 @@ def eqmove(strFunction):
 @app.route('/emptycarrmove/<strFunction>', methods=['GET', 'POST'])
 def emptycarrmove(strFunction):
     strCARRIERRID_list = ["ER-A01_stock1", "ER-B01_stock1"]  # 物品名稱
+    strTODEVICE_list = []#存貨架名稱的list
+    strTOPORT_list = [] #存機台的list
+
+    for strTODEVICE_list_index in range(len(shelf_name_list)):
+        strTODEVICE_list.append((shelf_name_list[strTODEVICE_list_index]).encode('utf-8'))
+
+    for strTOPORT_list_index in range(len(shelf_to_port_list)):
+        strTOPORT_list.append((shelf_to_port_list[strTOPORT_list_index]).encode('utf-8'))
 
     stk_dict = {
         "strFunction": strFunction,  # function
@@ -225,6 +261,8 @@ def emptycarrmove(strFunction):
         "strFORNAME": "ACS",  # 不知道是什麽，文件就這樣設定
         "strUSERID": user_id,  # 使用者id
         "strCARRIERRID": strCARRIERRID_list,  # 將物品號存放在stk_dict的字典,key值是 strCARRIERID
+        "strTODEVICE":strTODEVICE_list, #將貨架的list轉成字典然後送給jinjia2
+        "strTOPORT":strTOPORT_list, #機台的port list
     }
 
     # 以字典的形式傳給html的jinjia
@@ -238,18 +276,39 @@ def changecmd(strFunction):
     commandid = timeNow.strftime("%Y%m%d%H%M%S")+"" + \
         '{:0>4}'.format(rand.randint(
             1, 9999))  # 將時間戳加1到9999隨機數組成commandid隨機數的格式的是四個0，例如0001、0011、0111、1111
-    strCARRIERRID_list = ["ER-A01_stock1", "ER-B01_stock1"]  # 物品名稱
-    strFROMDEVICE_list = ["LSD002", "LSD003", "LSD004", "LSD005", "LSD022", "LSD023",
-                          "LSD024", "LSD025", "LSD029", "LSD030", "LSD033",
-                          "OCR01", "OCR02", "OCR03", "OCR04", "OCR05",
-                          "WSD119", "WSD137", "WSD156", "WSD157", "WSD158", "WSD162", "WSD163", "WSD645"]  # 貨架名稱
+    strCARRIERID_list = [] #存貨物的list
+    strFROMDEVICE_list=[] #存機台的list 
+    strFROMPORT_list = [] 
+    strTODEVICE_list = [] #存貨架的list
+    strTOPORT_list = [] #存貨架的port
+    
+
+    for strCARRIERID_list_index in range(len(carrierid_list)):
+        strCARRIERID_list.append((carrierid_list[strCARRIERID_list_index]).encode('utf-8'))
+
+    for strFROMDEVICE_list_index in range(len(machine_name_list)):
+        strFROMDEVICE_list.append((machine_name_list[strFROMDEVICE_list_index]).encode('utf-8'))
+    
+    for strFROMPORT_list_index in range(len(machine_port_list)):
+        strFROMPORT_list.append((machine_port_list[strFROMPORT_list_index]).encode('utf-8'))
+
+    for strTODEVICE_list_index in range(len(shelf_name_list)):
+        strTODEVICE_list.append((shelf_name_list[strTODEVICE_list_index]).encode('utf-8'))
+
+    for strTOPORT_list_index in range(len(shelf_from_port_list)):
+        strTOPORT_list.append((shelf_from_port_list[strTOPORT_list_index]).encode('utf-8'))
+
     stk_dict = {
         "strFunction": strFunction,  # function
         "strCOMAND": commandid,  # 流水號
         "strFORNAME": "ACS",  # 不知道是什麽，文件就這樣設定
         "strUSERID": user_id,  # 使用者id
-        "strCARRIERRID": strCARRIERRID_list,  # 將物品號存放在stk_dict的字典key值是strCARRIERID
+        "strCARRIERRID": strCARRIERID_list,  # 將物品號存放在stk_dict的字典key值是strCARRIERID
         "strFROMDEVICE": strFROMDEVICE_list,  # 將機台存放在stk_dict的字典,key值是strFROMDEVICE
+        "strFROMPORT":strFROMPORT_list,
+        "strTODEVICE":strTODEVICE_list,
+        "strTOPORT":strTOPORT_list,
+
     }
 
     # 以字典的形式傳給html的jinjia
@@ -265,18 +324,34 @@ def moverequest(strFunction):
         '{:0>4}'.format(rand.randint(
             1, 9999))  # 將時間戳加1到9999隨機數組成commandid隨機數的格式的是四個0，例如0001、0011、0111、1111
 
-    strCARRIERRID_list = ["ER-A01_stock1", "ER-B01_stock1"]  # 物品名稱
-    strFROMDEVICE_list = ["LSD002", "LSD003", "LSD004", "LSD005", "LSD022", "LSD023",
-                          "LSD024", "LSD025", "LSD029", "LSD030", "LSD033",
-                          "OCR01", "OCR02", "OCR03", "OCR04", "OCR05",
-                          "WSD119", "WSD137", "WSD156", "WSD157", "WSD158", "WSD162", "WSD163", "WSD645"]  # 貨架名稱
+    strCARRIERID_list = [] #存貨物的list
+    strFROMDEVICE_list=[] #存機台的list 
+    strFROMPORT_list = [] 
+    strTODEVICE_list = [] #存貨架的list
+    strTOPORT_list = [] #存貨架的port
+    for strCARRIERID_list_index in range(len(carrierid_list)):
+        strCARRIERID_list.append((carrierid_list[strCARRIERID_list_index]).encode('utf-8'))
+
+    for strFROMDEVICE_list_index in range(len(machine_name_list)):
+        strFROMDEVICE_list.append((machine_name_list[strFROMDEVICE_list_index]).encode('utf-8'))
+    for strFROMPORT_list_index in range(len(machine_port_list)):
+        strFROMPORT_list.append((machine_port_list[strFROMPORT_list_index]).encode('utf-8'))
+    for strTODEVICE_list_index in range(len(shelf_name_list)):
+        strTODEVICE_list.append((shelf_name_list[strTODEVICE_list_index]).encode('utf-8'))
+
+    for strTOPORT_list_index in range(len(shelf_to_port_list)):
+        strTOPORT_list.append((shelf_to_port_list[strTOPORT_list_index]).encode('utf-8'))
     stk_dict = {
         "strFunction": strFunction,
         "strCOMAND": commandid,
         "strFORNAME": "ACS",
         "strUSERID": user_id,
-        "strCARRIERRID": strCARRIERRID_list,
-        "strFROMDEVICE": strFROMDEVICE_list,
+        "strCARRIERID": strCARRIERID_list,
+        "strFROMDEVICE": strFROMDEVICE_list,  # 將機台存放在stk_dict的字典,key值是strFROMDEVICE
+        "strFROMPORT":strFROMPORT_list,
+        "strTODEVICE":strTODEVICE_list,
+        "strTOPORT":strTOPORT_list,
+        
     }
 
     return render_template('moverequest.html', stk_dict=stk_dict)
@@ -284,6 +359,11 @@ def moverequest(strFunction):
 
 @app.route('/invdata/<strFunction>', methods=['GET', 'POST'])
 def invdata(strFunction):
+    strSTKID_list = []
+
+    for strSTKID_list_index in range(len(shelf_name_list)):
+        strSTKID_list.append((shelf_name_list[strSTKID_list_index]).encode('utf-8'))
+
     timeNow = datetime.datetime.now()  # 讀取系統現在的時間戳
     Time = timeNow.strftime("%Y/%m/%d %H:%M:%S")  # 將時間戳轉爲YYYY/MM/DD HH:mm:SS格式
     commandid = timeNow.strftime("%Y%m%d%H%M%S")+"" + \
@@ -295,6 +375,7 @@ def invdata(strFunction):
         "strCOMAND": commandid,
         "strFORNAME": "ACS",
         "strUSERID": user_id,
+        "strSTKID":strSTKID_list
     }
     return render_template('invdata.html', stk_dict=stk_dict)
 
@@ -307,13 +388,17 @@ def movestatusrequest(strFunction):
         '{:0>4}'.format(rand.randint(
             1, 9999))  # 將時間戳加1到9999隨機數組成commandid隨機數的格式的是四個0，例如0001、0011、0111、1111
 
-    strCARRIERRID_list = ["ER-A01_stock1", "ER-B01_stock1"]
+    strCARRIERID_list = []
+
+    for strCARRIERID_list_index in range(len(carrierid_list)):
+        strCARRIERID_list.append((carrierid_list[strCARRIERID_list_index]).encode('utf-8'))
+
     stk_dict = {
         "strFunction": strFunction,
         "strCOMAND": commandid,
         "strFORNAME": "ACS",
         "strUSERID": user_id,
-        "strCARRIERRID": strCARRIERRID_list
+        "strCARRIERRID": strCARRIERID_list
     }
     return render_template('movestatusrequest.html', stk_dict=stk_dict)
 
