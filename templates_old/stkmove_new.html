@@ -21,47 +21,6 @@
 <div class="row">
     <!-- LOGS TABLE START -->
     <div class="col-10">
-        <!-- EXCEL LAUNCH START -->
-        <div id="excelTable" class="card d-none">
-            <div class="card-header pb-0">
-                <div class="row">
-                    <h2 class="h3 col-10">EXCEL ROWS</h2>
-                    <div class="col-2 text-end">
-                        <button type="button" class="btn btn-primary" onclick="closeExcel()">
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <table
-                id="excelFile"
-                data-pagination="true"
-                data-id-field="strCOMMANDID"
-                data-page-list="[5, 25, 50, 100, all]"
-                >
-                    <thead>
-                        <tr>
-                            <th data-field="strCARRIERTYPE">strCARRIERTYPE</th>
-                            <th data-field="strCOMMANDID">strCOMMANDID</th>
-                            <th data-field="strUSERID">strUSERID</th>
-                            <th data-field="strCARRIERID">strCARRIERID</th>
-                            <th data-field="strFROMDEVICE">strFROMDEVICE</th>
-                            <th data-field="strFROMPORT">strFROMPORT</th>
-                            <th data-field="strTODEVICE">strTODEVICE</th>
-                            <th data-field="strTOPORT">strTOPORT</th>
-                            <th data-field="strEMPTYCARRIER">strEMPTYCARRIER</th>
-                            <th data-field="strPRIORITY">strPRIORITY</th>
-                            <th data-field="strCMD">strCMD</th>
-                            <th data-field="strMETHODNAME">strMETHODNAME</th>
-                            <th data-field="strFORMNAME">strFORMNAME</th>
-                            <th data-field="delay">delay</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-        <!-- EXCEL LAUNCH END -->
         <div class="card">
             <div class="card-header pb-0">
                 <div class="row">
@@ -74,17 +33,24 @@
                 </div>
             </div>
             <div class="card-body pt-0">
-                <table
-                id="table"
-                data-toolbar="#toolbar"
-                data-search="true"
-                data-show-toggle="true"
-                data-show-fullscreen="true"
-                data-show-pagination-switch="true"
-                data-pagination="true"
-                data-id-field="id"
-                data-page-list="[10, 25, 50, 100, all]"
-                >
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-toggle="true"
+                    data-show-fullscreen="true" data-show-pagination-switch="true" data-pagination="true"
+                    data-id-field="id" data-page-list="[10, 25, 50, 100, all]">
+                    <thead>
+                        <tr>
+                            <th class="col-1" data-field="no">No.</th>
+                            <th data-field="data._FUNCTION">Function</th>
+                            <th data-field="data._strCOMMANDID">COMMANDID</th>
+                            <th data-field="data._strCARRIERID">CARRIERID</th>
+                            <th data-field="data._strFROMDEVICE">FROMDEVICE/STKID</th>
+                            <th data-field="data._strFROMPORT">FROMPORT</th>
+                            <th data-field="data._strTODEVICE">TODEVICE</th>
+                            <th data-field="data._strTOPORT">TOPORT</th>
+                            <th data-field="data._strVEHICLEID">VEHICLEID</th>
+                            <th data-field="data._strRESULT">RESULT</th>
+                            <th data-field="">Details</th>
+                        </tr>
+                    </thead>
                 </table>
             </div>
         </div>
@@ -98,9 +64,8 @@
                     <div class="mb-2">
                         <label class="form-label fw-bolder">Batch Processing:</label>
                         <button id="batch" type="button" class="btn btn-primary w-100 mt-2">Batch</button>
-                        <hr>
-                        <button type="button" class="btn btn-primary w-100" onclick="xFile.click()">Launch Excel</button>
-                        <input type="file" id="xFile" style="display: none" name="" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="showfile(this)">
+                        <button type="button" class="btn btn-primary w-100 mt-2" data-bs-toggle="modal"
+                            data-bs-target="#excelDataList">LAUNCH EXCEL</button>
                     </div>
                 </div>
             </div>
@@ -108,29 +73,30 @@
         <div class="card">
             <div class="card-body py-3">
                 <div class="row">
-                    <label class="form-label fw-bolder">Input:</label>
+                    <div class="mb-2">
+                        <label class="form-label fw-bolder">Input:</label>
+                        <label class="form-label" for="strCARRIERTYPE">strCARRIERTYPE:</label>
+                        <input type="text" id="strCARRIERTYPE" name="strCARRIERTYPE" class="form-control"
+                            value="MAGAZINE">
+                    </div>
                     <div class="mb-2">
                         <label class="form-label" for="strCOMMANDID">strCOMMANDID:</label>
-                        <input class="form-control" type="text" id="strCOMMANDID" name="strCOMMANDID"
-                            value={{stk_dict["strCOMAND"]}}>
+                        <input type="text" id="strCOMMANDID" name="strCOMMANDID" class="form-control" value={{ commandid
+                            }}>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strUSERID">strUSERID:</label>
-                        <input class="form-control" type="text" id="strUSERID" name="strUSERID"
+                        <input type="text" id="strUSERID" name="strUSERID" class="form-control"
                             value={{stk_dict["strUSERID"]}}>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strCARRIERID">strCARRIERID:</label>
-                        <input class="form-control" type="text" id="strCARRIERID" name="strTODEVICE">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label" for="strCARRIERTYPE">strCARRIERTYPE:</label>
-                        <input class="form-control" type="text" id="strCARRIERTYPE" name="strCARRIERTYPE"
-                            value="MAGAZINE">
+                        <input type="text" id="strCARRIERRID" name="strCARRIERRID" class="form-control"
+                            value="ER-A01-01">
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strFROMDEVICE">strFROMDEVICE:</label>
-                        <select class="form-select" type="submit" name="strFROMDEVICE" id="strFROMDEVICE_selected">
+                        <select type="submit" name="strFROMDEVICE" id="strFROMDEVICE_selected" class="form-select">
                             <option value="{{stk_dict['strFROMDEVICE'][0]}}" selected>
                                 {{stk_dict["strFROMDEVICE"][0]}}</option>
                             {% for strFROMDEVICE in stk_dict["strFROMDEVICE"][1:] %}
@@ -140,12 +106,17 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strFROMPORT">strFROMPORT:</label>
-                        <input class="form-control" type="text" id="strFROMPORT" name="strFROMPORT"
-                            value={{stk_dict["strFROMPORT"]}}>
+                        <select type="submit" name="strFROMPORT" id="strFROMPORT_selected" class="form-select">
+                            <option value="{{stk_dict['strFROMPORT'][0]}}" selected>
+                                {{stk_dict["strFROMPORT"][0]}}</option>
+                            {% for strFROMPORT in stk_dict["strFROMPORT"][1:] %}
+                            <option value="{{strFROMPORT}}" id="hope_id">{{strFROMPORT}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strTODEVICE">strTODEVICE:</label>
-                        <select class="form-select" type="submit" name="strTODEVICE" id="strTODEVICE_selected">
+                        <select type="submit" name="strTODEVICE" id="strTODEVICE_selected" class="form-select">
                             <option value="{{stk_dict['strTODEVICE'][0]}}" selected>
                                 {{stk_dict["strTODEVICE"][0]}}</option>
                             {% for strTODEVICE in stk_dict["strTODEVICE"][1:] %}
@@ -154,40 +125,35 @@
                         </select>
                     </div>
                     <div class="mb-2">
-                        <label class="form-label" for="strTOPORT">strTOPORT:</label>
-                        <select class="form-select" type="submit" name="strTOPORT" id="strTOPORT_selected">
-                            <option value="{{stk_dict['strTOPORT'][0]}}" selected>
-                                {{stk_dict["strTOPORT"][0]}}</option>
-                            {% for strTOPORT in stk_dict["strTOPORT"][1:] %}
-                            <option value="{{strTOPORT}}" id="hope_id">{{strTOPORT}}</option>
-                            {% endfor %}
-                        </select>
+                        <label class="form-label" for="strT0PORT">strTOPORT:</label>
+                        <input type="text" id="strTOPORT" name="strTOPORT" class="form-control"
+                            value={{stk_dict["strTOPORT"]}}>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strEMPTYCARRIER">strEMPTYCARRIER:</label>
-                        <input class="form-control" type="text" id="strEMPTYCARRIER" name="strEMPTYCARRIER" value="ON">
+                        <input type="text" id="strEMPTYCARRIER" name="strEMPTYCARRIER" class="form-control" value="ON">
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strPRIORITY">strPRIORITY:</label>
-                        <input class="form-control" type="text" id="strPRIORITY" name="strPRIORITY" value="1">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label" for="strFORMNAME">strFORMNAME:</label>
-                        <input class="form-control" type="text" id="strFORMNAME" name="strFORMNAME"
-                            value={{stk_dict["strFORNAME"]}}>
+                        <input type="text" id="strPRIORITY" name="strPRIORITY" class="form-control" value="1">
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strCMD">strCMD:</label>
-                        <input class="form-control" type="text" id="strCMD" name="strCMD"
+                        <input type="text" id="strCMD" name="strCMD" class="form-control"
                             value={{stk_dict["strFunction"]}}>
                     </div>
                     <div class="mb-2">
                         <label class="form-label" for="strMETHODNAME">strMETHODNAME:</label>
-                        <input class="form-control" type="text" id="strMETHODNAME" name="strMETHODNAME"
+                        <input type="text" id="strMETHODNAME" name="strMETHODNAME" class="form-control"
                             value={{stk_dict["strFunction"]}}>
                     </div>
                     <div class="mb-2">
-                        <label class="form-label" class="form-label" for="" form-label>　</label>
+                        <label class="form-label" for="strFORMNAME">strFORMNAME:</label>
+                        <input type="text" id="strFORMNAME" name="strFORMNAME" class="form-control"
+                            value={{stk_dict["strFORNAME"]}}>
+                    </div>
+                    <div class="mb-2">
+                        <label for="" form-label>　</label>
                         <button id="send_to_ACS_Getway" type="button"
                             class="btn btn-primary w-100">send_to_ACS_Getway</button>
                     </div>
@@ -197,179 +163,190 @@
     </div>
     <!-- CONTROL FORM END -->
 </div>
-
+<!-- EXCEL MODAL START -->
+<div class="row">
+    <div class="modal fade" id="excelDataList" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="excelDataListLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="excelDataListLabel">STKMOVE EXCEL</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid table-responsive">
+                        <div id="excelFile"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- EXCEL MODAL END -->
 
 <script>
     let $table = $('#table')
-    let $batchTable = $('#excelFile')
-    let logsData = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
-
-    function batchTable(data){
-        // console.log("TABLE", data)
-        $batchTable.bootstrapTable('destroy').bootstrapTable({data: data})
-        $('#excelTable').removeClass('d-none')
-        data = ''
-    }
-
-    function closeExcel(){
-        $('#excelTable').addClass('d-none')
-    }
+    let logsData = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || []
 
     function initTable() {
         $table.bootstrapTable('destroy').bootstrapTable({
             data: logsData,
-                columns: [
+            columns: [
                 {
-                field: 'no',
-                title: 'No.',
-                align: 'center',
-                valign: 'middle'
+                    field: 'no',
+                    title: 'No.',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._FUNCTION',
-                title: 'Function',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._FUNCTION',
+                    title: 'Function',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strCOMMANDID',
-                title: 'COMMANDID',
-                align: 'center',
-                valign: 'middle',
-                sortable: true
+                    field: 'data._strCOMMANDID',
+                    title: 'COMMANDID',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                },
+                {
+                    field: 'data._strCARRIERID',
+                    title: 'CARRIERID',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strCARRIERID',
-                title: 'CARRIERID',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strFROMDEVICE',
+                    title: 'FROMDEVICE/STKID',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strFROMDEVICE',
-                title: 'FROMDEVICE/STKID',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strFROMPORT',
+                    title: 'FROMPORT',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strFROMPORT',
-                title: 'FROMPORT',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strFROMDEVICE',
+                    title: 'FROMDEVICE/STKID',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strFROMDEVICE',
-                title: 'FROMDEVICE/STKID',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strTODEVICE',
+                    title: 'TODEVICE',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strTODEVICE',
-                title: 'TODEVICE',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strTOPORT',
+                    title: 'TOPORT',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strTOPORT',
-                title: 'TOPORT',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strRESULT',
+                    title: 'RESULT',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strRESULT',
-                title: 'RESULT',
-                align: 'center',
-                valign: 'middle'
-                }, {
-                title: 'Details',
-                valign: 'middle',
-                formatter: detailFormatter
+                    title: 'Details',
+                    valign: 'middle',
+                    formatter: detailFormatter
                 }
             ]
         })
     }
 
-    $(function() {
+    $(function () {
         initTable()
+        showfile()
     })
 
     // 讀取文件內容
-    let excelFile =''
-    // 讀取文件內容
-    function showfile(obj) {
-        if(!obj.files) {
-            return
-        }
-        let f = obj.files[0]
-        let reader = new FileReader()
-        reader.readAsBinaryString(f)
-        reader.onload = function(e) {
-            let data = e.target.result
-            // console.log("DATA", data)
-            excelFile = XLSX.read(data, {
-                type: 'binary'
-            })
-            // console.log("EXCELPATH2", excelFile)
+    function showfile() {
+        fetch('../static/batch_excel/stkmove.xlsx', {
+        }).then((res) => {
+            // console.log('object res', res);
+            return res.blob();
+        }).then((blob) => {
+            let reader = new FileReader();
 
-            //展示所有表
-            // for(let i=0;i<excelFile.SheetNames.length;i++){
-            // 	　document.getElementById("excelFile").innerHTML +=excelFile.SheetNames[i]+"="+JSON.stringify(XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[i]]))+"<br/>";
-            // 　　　　　　}
+            reader.readAsBinaryString(blob);
 
-            let dataTable1 = ""
-            //只展示第一個表
-            let headers = new Array();
-            let str = XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[0]])
-            // console.log("長度", str)
-            // dataTable1+= "<div class='collapse show' id='multiCollapseExample1'><div class='card card-body'><div class='table-responsive'><table class='table table-striped table-lg '><tr>"
-            // for(let key in str[0]){
-            //     headers.push(key)  //獲取表頭
-            //     dataTable1 += "<th>" + key + "</th>"
-            // }
-            // dataTable1 += "</tr>"
-            // console.log(headers)
-            //顯示行數
-            // for(let i = 0; i < str.length ; i++){
-                // let json = JSON.stringify(str[i])
-            //     dataTable1 += "<tr>"
-            //     let json = str[i]
-            //     for( let j=0;j<headers.length;j++){
-            //         dataTable1 += "<td>" + json[headers[j]] + "</td>";
-            //     }
-            //     dataTable1 += "</tr>";
-            // }
+            reader.onload = function (e) {
+                let excelFile = ''
+                let data = e.target.result;
+                // console.log("DATA", data)
+                excelFile = XLSX.read(data, {
+                    type: 'binary'
+                });
+                // console.log("EXCELPATH2", excelFile)
 
-            // dataTable1 += "</table></div></div></div>"
-            batchTable(str)
+                //展示所有表
+                // for(let i=0;i<excelFile.SheetNames.length;i++){
+                // 	　document.getElementById("excelFile").innerHTML +=excelFile.SheetNames[i]+"="+JSON.stringify(XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[i]]))+"<br/>";
+                // 　　　　　　}
 
-            obj.value = ''
-        }
-        excelFile =''
+                let dataTable1 = "";
+                //只展示第一個表
+                let headers = new Array();
+                let str = XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[0]])
+                // console.log("長度", str.length)
+                dataTable1 += "<table class='table table-striped table-lg'><tr>"
+                for (let key in str[0]) {
+                    headers.push(key)  //獲取表頭
+                    dataTable1 += "<th>" + key + "</th>"
+                }
+                dataTable1 += "</tr>"
+                // console.log(headers)
+                //顯示行數
+                for (let i = 0; i < str.length; i++) {
+                    // let json = JSON.stringify(str[i])
+                    dataTable1 += "<tr>"
+                    let json = str[i]
+                    for (let j = 0; j < headers.length; j++) {
+                        dataTable1 += "<td>" + json[headers[j]] + "</td>";
+                    }
+                    dataTable1 += "</tr>";
+                }
+
+                dataTable1 += "</table>"
+                document.getElementById("excelFile").innerHTML = dataTable1
+            }
+        })
     }
 
     function detailFormatter(value, row, index) {
         let str = ''
 
-        str += '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#a'+ row.data._strCOMMANDID +'">Details</button><div class="modal fade" id="a'+ row.data._strCOMMANDID +'" tabindex="-1" aria-labelledby="label_'+ row.data._strCOMMANDID +'" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title fs-3">Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">'
+        str += '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#a' + row.data._strCOMMANDID + '">Details</button><div class="modal fade" id="a' + row.data._strCOMMANDID + '" tabindex="-1" aria-labelledby="label_' + row.data._strCOMMANDID + '" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title fs-3">Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">'
         str += '<table class="table table-striped table-sm"><thead><tr><th scope="col">#</th><th scope="col">Key</th><th scope="col">Result</th></tr></thead><tbody>',
-        Object.keys(row.data).forEach((key, index) => {
-            str += '<tr>'
-            str += `<td>${index+1}</td>`
-            str += `<td>${key}</td>`
-            if( key == '_message_body' ) {
-                str += `<td><xmp class="text-wrap">${row.data[key]}</xmp></td>`
-            }else{
-                str += `<td>${row.data[key]}</td>`
-            }
-            
-            str += '</tr>'
-        })
+            Object.keys(row.data).forEach((key, index) => {
+                str += '<tr>'
+                str += `<td>${index + 1}</td>`
+                str += `<td>${key}</td>`
+                if (key == '_message_body') {
+                    str += `<td><xmp class="text-wrap">${row.data[key]}</xmp></td>`
+                } else {
+                    str += `<td>${row.data[key]}</td>`
+                }
+
+                str += '</tr>'
+            })
         str += '</tbody></table></div></div></div></div>'
         return str
     }
 
 
     function update() {
-        let newData = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
+        let newData = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || []
         $table.bootstrapTable('load', newData)
     }
-    
+
     $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
     idRefresh()
+    //console.log("strFROMDEVICE:" + $('#strFROMDEVICE_selected').val());
+    //console.log("strFROMPORT:" + $('#strFROMPORT_selected').val());
 
-    $("#strCARRIERID").val(($('#strTODEVICE_selected').val()) + "-" + ($('#strTOPORT_selected').val()));
+    $("#strCARRIERRID").val(($('#strFROMDEVICE_selected').val()) + "-" + ($('#strFROMPORT_selected').val()));
 
-    let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || [];
+    let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || [];
 
 
 
@@ -402,6 +379,7 @@
             });
         }
     );
+
     $('#batch').click(
         function () {
             console.log("function_batch_in_ajax_script");
@@ -422,7 +400,7 @@
 
             $.ajax({
                 type: "POST",
-                url: $SCRIPT_ROOT + "/send_eqmove_batch_function",
+                url: $SCRIPT_ROOT + "/send_stkmove_batch_function",
                 data: form_data,
                 success: (data) => {
                     if (data.length > 0) {
@@ -445,7 +423,7 @@
 
                     // const input = data.send_message_label
 
-                    let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || [];
+                    let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || [];
 
                     update()
 
@@ -466,24 +444,23 @@
 
                     console.log("POSTDATAORI", test)
 
-                    if (test.eqmove_batch_0 != '') {
-                        let resendlog = Object.entries(test)
-                        console.log("BATCHLOG", resendlog)
 
-                        for (let i = 0; i < resendlog.length; i++) {
+                    let resendlog = Object.entries(test).slice(0, -1)
+                    console.log("BATCHLOG", resendlog)
 
-                            let postdata = {
-                                "no": dataList.length + 1,
-                                "data": trying(resendlog[i][1])
-                            }
+                    for (let i = 0; i < resendlog.length; i++) {
 
-                            dataList.push(postdata)
-                            console.log(typeof dataList)
-                            console.log("BATCH", dataList)
-                            localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                            update()
-                            postdata = ''
+                        let postdata = {
+                            "no": dataList.length + 1,
+                            "data": trying(resendlog[i][1])
                         }
+
+                        dataList.push(postdata)
+                        console.log(typeof dataList)
+                        console.log("BATCH", dataList)
+                        localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                        update()
+                        postdata = ''
                     }
 
 
@@ -545,7 +522,7 @@
                         // const input = data.recv_message_label
                         // displayData(input)
                         if (data.recv_message_label != 'msmq no label') {
-                            let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
+                            let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || []
 
                             update()
 
@@ -586,10 +563,30 @@
                                 // console.log("RESDATA：", resdata)
                                 dataList.push(resdata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
                                 update()
 
                                 resdata = ''
+                            } else if (test.length == 1) {
+                                if (test[0].data.stkmove_batch_0 != '') {
+                                    let resendlog = Object.entries(test[0].data)
+                                    console.log("ELSEBATCH", resendlog)
+
+                                    for (let i = 0; i < resendlog.length; i++) {
+                                        console.log("FIN", resendlog[i][1])
+                                        let resSend = resendlog.find(o => o['send_FUNCTION'])
+
+                                        let resSenddata = {
+                                            "no": dataList.length + 1,
+                                            "data": tryingsend(resSend)
+                                        }
+                                        dataList.push(resSenddata)
+                                        console.log(typeof dataList)
+                                        localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                        update()
+                                        resSenddata = ''
+                                    }
+                                }
                             } else if (test.length == 2) {
                                 console.log("TEST2", test)
                                 let resRecv = test.find(o => o['recv_FUNCTION'])
@@ -600,7 +597,7 @@
                                 }
                                 dataList.push(resRecvdata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
                                 update()
                                 resRecvdata = ''
 
@@ -610,7 +607,7 @@
                                 }
                                 dataList.push(resSenddata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
                                 update()
                                 resSenddata = ''
 
@@ -634,17 +631,18 @@
     );
 
     $('#send_to_ACS_Getway').click(
+
         function () {
             console.log("function is send");
             var form_data = new FormData();
             form_data.append('strCOMMANDID', $("#strCOMMANDID").val());
             form_data.append('strUSERID', $("#strUSERID").val());
-            form_data.append('strCARRIERRID', $("#strCARRIERID").val());
+            form_data.append('strCARRIERRID', $("#strCARRIERRID").val());
             form_data.append('strCARRIERTYPE', $("#strCARRIERTYPE").val());
             form_data.append('strFROMDEVICE', $("#strFROMDEVICE_selected").val());
-            form_data.append('strFROMPORT', $("#strFROMPORT").val());
+            form_data.append('strFROMPORT', $("#strFROMPORT_selected").val());
             form_data.append('strTODEVICE', $("#strTODEVICE_selected").val());
-            form_data.append('strTOPORT', $("#strTOPORT_selected").val());
+            form_data.append('strTOPORT', $("#strTOPORT").val());
             form_data.append('strEMPTYCARRIER', $("#strEMPTYCARRIER").val());
             form_data.append('strPRIORITY', $("#strPRIORITY").val());
             form_data.append('strMETHODNAME', $("#strMETHODNAME").val());
@@ -654,6 +652,7 @@
             //附帶text也是可以的
             //var food_name = "";
             //var food_price = "";
+
             $.ajax({
                 type: "POST",
                 url: $SCRIPT_ROOT + "/send_function",
@@ -675,12 +674,11 @@
                     }
                     //console.log("驗證:" + data.validate);
                     //console.log("價錢:" + data.PayAmount);
-                    //console.log(data)
-                    //console.log(data.length)
-                    //console.log(data.send_xml)
-                    //var txt2 = $("").text(data.replay);
-                    //console.log(txt2)
-                    let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || [];
+                    // console.log('DATA:', data)
+
+                    // const input = data.send_message_label
+
+                    let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || [];
 
                     update()
 
@@ -707,11 +705,16 @@
                     console.log("DATALIST：", dataList)
                     dataList.push(postdata)
                     console.log(typeof dataList)
-                    localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
+                    localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
                     update()
 
                     postdata = ''
                     idRefresh()
+
+                    //console.log(data.length)
+                    //console.log(data.send_xml)
+                    //var txt2 = $("").text(data.replay);
+                    //console.log(txt2)
                     //$("body").append(txt2)
                     //alert(data.validate)
                     //alert(data.Rtnfood)
@@ -721,7 +724,7 @@
                 },
                 contentType: false,
                 processData: false,
-                dataType: "json"
+                dataType: "json",
             });
             function show() {
                 var mydate = new Date();
@@ -760,12 +763,11 @@
                         //console.log("驗證:" + data.validate);
                         //console.log("價錢:" + data.PayAmount);
                         //console.log(data.message_label)
-                        //console.log(data.message_body)
-                        //var txt2 = $("").text(data.replay);
-                        //console.log(txt2)
-                        //$("body").append(txt2)
+
+                        // const input = data.recv_message_label
+                        // displayData(input)
                         if (data.recv_message_label != 'msmq no label') {
-                            let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
+                            let dataList = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || []
 
                             update()
 
@@ -806,7 +808,7 @@
                                 // console.log("RESDATA：", resdata)
                                 dataList.push(resdata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
                                 update()
 
                                 resdata = ''
@@ -814,35 +816,6 @@
                                 console.log("TEST2", test)
                                 let resRecv = test.find(o => o['recv_FUNCTION'])
                                 let resSend = test.find(o => o['send_FUNCTION'])
-                                // let resSenddata =  {
-                                //     "no": dataList.length +1,
-                                //     "data": tryingsend(resSend)
-                                // }
-                                // dataList.push(resSenddata)
-                                // console.log(typeof dataList)
-                                // localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                // update()
-
-                                // resSenddata = ''
-
-                                // let resRecvdata =  {
-                                //     "no": dataList.length +1,
-                                //     "data": tryingrecv(resRecv)
-                                // }
-                                // dataList.push(resRecvdata)
-                                // console.log(typeof dataList)
-                                // localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                // update()
-                                // resRecvdata = ''
-                                let resSenddata = {
-                                    "no": dataList.length + 1,
-                                    "data": tryingsend(resSend)
-                                }
-                                dataList.push(resSenddata)
-                                console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
-                                update()
-                                resSenddata = ''
 
                                 let resRecvdata = {
                                     "no": dataList.length + 1,
@@ -850,19 +823,24 @@
                                 }
                                 dataList.push(resRecvdata)
                                 console.log(typeof dataList)
-                                localStorage.setItem('dataLogs_eqmove', JSON.stringify(dataList))
+                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
                                 update()
                                 resRecvdata = ''
 
+                                let resSenddata = {
+                                    "no": dataList.length + 1,
+                                    "data": tryingsend(resSend)
+                                }
+                                dataList.push(resSenddata)
+                                console.log(typeof dataList)
+                                localStorage.setItem('dataLogs_stkmove', JSON.stringify(dataList))
+                                update()
+                                resSenddata = ''
 
                             }
 
                         }
-                        //alert(data.validate)
-                        //alert(data.Rtnfood)
-                        //也可以用jquery來呈現結果
-                        //food_name = data.Rtnfood
-                        //console.log("食物1:" + food_name)
+
                     },
                     contentType: false,
                     processData: false,
@@ -875,6 +853,7 @@
 
 
         }
+
     );
 
     function removeEmptyField(obj) {
@@ -920,36 +899,31 @@
     }
 
     function cleanup() {
-        localStorage.removeItem('dataLogs_eqmove')
-        let newData = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
+        localStorage.removeItem('dataLogs_stkmove')
+        let newData = JSON.parse(localStorage.getItem('dataLogs_stkmove')) || []
         $table.bootstrapTable('load', newData)
     }
 
 
+
     $(() => {
-        $('#strTODEVICE_selected').change(() => {
-            $("#strCARRIERID").val(($('#strTODEVICE_selected').val()) + "-" + ($('#strTOPORT_selected').val()));
+        $('#strFROMDEVICE_selected').change(() => {
+            $("#strCARRIERRID").val(($('#strFROMDEVICE_selected').val()) + "-" + ($('#strFROMPORT_selected').val()));
 
         });
     });
     $(() => {
-        $('#strTOPORT_selected').change(() => {
-            $("#strCARRIERID").val(($('#strTODEVICE_selected').val()) + "-" + ($('#strTOPORT_selected').val()));
+        $('#strFROMPORT_selected').change(() => {
+            $("#strCARRIERRID").val(($('#strFROMDEVICE_selected').val()) + "-" + ($('#strFROMPORT_selected').val()));
 
         });
     });
-    //console.log("hpe");
 
 
     function PrefixInteger(num, length) {
         return (Array(length).join('0') + num).slice(-length);
     }
 
-    //console.log($("select").val());
-    //});
-
-    //});
-    //$("#strFROMDEVICE").val("hope");
     $(function () {
         $('form').bind('submit', function () { //给form标签绑定submit事件
 
@@ -977,31 +951,6 @@
         });
 
     });
-
-
-    $(function () {
-        // body...
-        $("#btn").click(function () {
-            $.ajax({
-                url: "test_post/nn",
-                type: "POST",
-                dataType: "json",
-                success: function (data) {
-                    // alert(data.name + ":" + data.age);
-                    //$("#NAME2").val(data.name);
-                    //$("#AGE2").val(data.age);
-                    console.log(data)
-                }
-
-            })
-        })
-    })
-
-
-
-
-
-
 
 </script>
 {% endblock %}

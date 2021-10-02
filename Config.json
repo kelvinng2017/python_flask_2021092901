@@ -2,9 +2,9 @@
     "SendQueueName": "ACSBridgeQueue",
     "RecvQueueName": "MESQueue",
     "ErrQueueName": "MESQueue",
-    "SendQueueIP": "tcp:192.168.0.85",
-    "RecvQueueIP": "tcp:192.168.0.85",
-    "ErrQueueIP": "tcp:192.168.0.85",
+    "SendQueueIP": "tcp:192.168.0.85:1801",
+    "RecvQueueIP": "tcp:192.168.0.85:1801",
+    "ErrQueueIP": "tcp:192.168.0.85:1801",
     "IP": "192.168.0.85",
     "STK_List": {
         "E003": "",

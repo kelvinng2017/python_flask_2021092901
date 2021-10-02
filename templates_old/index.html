@@ -1,0 +1,18 @@
+{% extends 'header.html' %}
+
+{% block head %}
+    <title>Dashboard - Gyro Test Tools</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/dashborad.css">
+{% endblock %}
+
+{% block body %}
+    <div class="row mb-3 d-flex justify-content-between">
+        <div class="col-10">
+            <h1 class="h3">Transfer Test</h1>
+        </div>
+        <div class="col-2 text-end">
+            <button class="btn btn-primary" onclick="location.reload()">Refresh</button>
+        </div>
+    </div>
+
+{% endblock %}

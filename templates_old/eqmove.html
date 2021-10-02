@@ -21,47 +21,6 @@
 <div class="row">
     <!-- LOGS TABLE START -->
     <div class="col-10">
-        <!-- EXCEL LAUNCH START -->
-        <div id="excelTable" class="card d-none">
-            <div class="card-header pb-0">
-                <div class="row">
-                    <h2 class="h3 col-10">EXCEL ROWS</h2>
-                    <div class="col-2 text-end">
-                        <button type="button" class="btn btn-primary" onclick="closeExcel()">
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <table
-                id="excelFile"
-                data-pagination="true"
-                data-id-field="strCOMMANDID"
-                data-page-list="[5, 25, 50, 100, all]"
-                >
-                    <thead>
-                        <tr>
-                            <th data-field="strCARRIERTYPE">strCARRIERTYPE</th>
-                            <th data-field="strCOMMANDID">strCOMMANDID</th>
-                            <th data-field="strUSERID">strUSERID</th>
-                            <th data-field="strCARRIERID">strCARRIERID</th>
-                            <th data-field="strFROMDEVICE">strFROMDEVICE</th>
-                            <th data-field="strFROMPORT">strFROMPORT</th>
-                            <th data-field="strTODEVICE">strTODEVICE</th>
-                            <th data-field="strTOPORT">strTOPORT</th>
-                            <th data-field="strEMPTYCARRIER">strEMPTYCARRIER</th>
-                            <th data-field="strPRIORITY">strPRIORITY</th>
-                            <th data-field="strCMD">strCMD</th>
-                            <th data-field="strMETHODNAME">strMETHODNAME</th>
-                            <th data-field="strFORMNAME">strFORMNAME</th>
-                            <th data-field="delay">delay</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-        <!-- EXCEL LAUNCH END -->
         <div class="card">
             <div class="card-header pb-0">
                 <div class="row">
@@ -74,17 +33,23 @@
                 </div>
             </div>
             <div class="card-body pt-0">
-                <table
-                id="table"
-                data-toolbar="#toolbar"
-                data-search="true"
-                data-show-toggle="true"
-                data-show-fullscreen="true"
-                data-show-pagination-switch="true"
-                data-pagination="true"
-                data-id-field="id"
-                data-page-list="[10, 25, 50, 100, all]"
-                >
+                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-toggle="true"
+                    data-show-fullscreen="true" data-show-pagination-switch="true" data-pagination="true"
+                    data-id-field="id" data-page-list="[10, 25, 50, 100, all]">
+                    <thead>
+                        <tr>
+                            <th class="col-1" data-field="no">No.</th>
+                            <th data-field="data._FUNCTION">Function</th>
+                            <th data-field="data._strCOMMANDID">COMMANDID</th>
+                            <th data-field="data._strCARRIERID">CARRIERID</th>
+                            <th data-field="data._strFROMDEVICE">FROMDEVICE/STKID</th>
+                            <th data-field="data._strFROMPORT">FROMPORT</th>
+                            <th data-field="data._strTODEVICE">TODEVICE</th>
+                            <th data-field="data._strTOPORT">TOPORT</th>
+                            <th data-field="data._strRESULT">RESULT</th>
+                            <th data-field="">Details</th>
+                        </tr>
+                    </thead>
                 </table>
             </div>
         </div>
@@ -98,9 +63,8 @@
                     <div class="mb-2">
                         <label class="form-label fw-bolder">Batch Processing:</label>
                         <button id="batch" type="button" class="btn btn-primary w-100 mt-2">Batch</button>
-                        <hr>
-                        <button type="button" class="btn btn-primary w-100" onclick="xFile.click()">Launch Excel</button>
-                        <input type="file" id="xFile" style="display: none" name="" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="showfile(this)">
+                        <button type="button" class="btn btn-primary w-100 mt-2" data-bs-toggle="modal"
+                            data-bs-target="#excelDataList">LAUNCH EXCEL</button>
                     </div>
                 </div>
             </div>
@@ -197,163 +161,173 @@
     </div>
     <!-- CONTROL FORM END -->
 </div>
+<!-- EXCEL MODAL START -->
+<div class="row">
+    <div class="modal fade" id="excelDataList" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="excelDataListLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="excelDataListLabel">eqmove EXCEL</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid table-responsive">
+                        <div id="excelFile"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- EXCEL MODAL END -->
 
 
 <script>
     let $table = $('#table')
-    let $batchTable = $('#excelFile')
     let logsData = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
-
-    function batchTable(data){
-        // console.log("TABLE", data)
-        $batchTable.bootstrapTable('destroy').bootstrapTable({data: data})
-        $('#excelTable').removeClass('d-none')
-        data = ''
-    }
-
-    function closeExcel(){
-        $('#excelTable').addClass('d-none')
-    }
 
     function initTable() {
         $table.bootstrapTable('destroy').bootstrapTable({
             data: logsData,
-                columns: [
+            columns: [
                 {
-                field: 'no',
-                title: 'No.',
-                align: 'center',
-                valign: 'middle'
+                    field: 'no',
+                    title: 'No.',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._FUNCTION',
-                title: 'Function',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._FUNCTION',
+                    title: 'Function',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strCOMMANDID',
-                title: 'COMMANDID',
-                align: 'center',
-                valign: 'middle',
-                sortable: true
+                    field: 'data._strCOMMANDID',
+                    title: 'COMMANDID',
+                    align: 'center',
+                    valign: 'middle',
+                    sortable: true
+                },
+                {
+                    field: 'data._strCARRIERID',
+                    title: 'CARRIERID',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strCARRIERID',
-                title: 'CARRIERID',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strFROMDEVICE',
+                    title: 'FROMDEVICE/STKID',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strFROMDEVICE',
-                title: 'FROMDEVICE/STKID',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strFROMPORT',
+                    title: 'FROMPORT',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strFROMPORT',
-                title: 'FROMPORT',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strFROMDEVICE',
+                    title: 'FROMDEVICE/STKID',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strFROMDEVICE',
-                title: 'FROMDEVICE/STKID',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strTODEVICE',
+                    title: 'TODEVICE',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strTODEVICE',
-                title: 'TODEVICE',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strTOPORT',
+                    title: 'TOPORT',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strTOPORT',
-                title: 'TOPORT',
-                align: 'center',
-                valign: 'middle'
+                    field: 'data._strRESULT',
+                    title: 'RESULT',
+                    align: 'center',
+                    valign: 'middle'
                 }, {
-                field: 'data._strRESULT',
-                title: 'RESULT',
-                align: 'center',
-                valign: 'middle'
-                }, {
-                title: 'Details',
-                valign: 'middle',
-                formatter: detailFormatter
+                    title: 'Details',
+                    valign: 'middle',
+                    formatter: detailFormatter
                 }
             ]
         })
     }
 
-    $(function() {
+    $(function () {
         initTable()
+        showfile()
     })
 
     // 讀取文件內容
-    let excelFile =''
-    // 讀取文件內容
-    function showfile(obj) {
-        if(!obj.files) {
-            return
-        }
-        let f = obj.files[0]
-        let reader = new FileReader()
-        reader.readAsBinaryString(f)
-        reader.onload = function(e) {
-            let data = e.target.result
-            // console.log("DATA", data)
-            excelFile = XLSX.read(data, {
-                type: 'binary'
-            })
-            // console.log("EXCELPATH2", excelFile)
+    function showfile() {
+        fetch('../static/batch_excel/eqmove.xlsx', {
+        }).then((res) => {
+            // console.log('object res', res);
+            return res.blob();
+        }).then((blob) => {
+            let reader = new FileReader();
 
-            //展示所有表
-            // for(let i=0;i<excelFile.SheetNames.length;i++){
-            // 	　document.getElementById("excelFile").innerHTML +=excelFile.SheetNames[i]+"="+JSON.stringify(XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[i]]))+"<br/>";
-            // 　　　　　　}
+            reader.readAsBinaryString(blob);
 
-            let dataTable1 = ""
-            //只展示第一個表
-            let headers = new Array();
-            let str = XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[0]])
-            // console.log("長度", str)
-            // dataTable1+= "<div class='collapse show' id='multiCollapseExample1'><div class='card card-body'><div class='table-responsive'><table class='table table-striped table-lg '><tr>"
-            // for(let key in str[0]){
-            //     headers.push(key)  //獲取表頭
-            //     dataTable1 += "<th>" + key + "</th>"
-            // }
-            // dataTable1 += "</tr>"
-            // console.log(headers)
-            //顯示行數
-            // for(let i = 0; i < str.length ; i++){
-                // let json = JSON.stringify(str[i])
-            //     dataTable1 += "<tr>"
-            //     let json = str[i]
-            //     for( let j=0;j<headers.length;j++){
-            //         dataTable1 += "<td>" + json[headers[j]] + "</td>";
-            //     }
-            //     dataTable1 += "</tr>";
-            // }
+            reader.onload = function (e) {
+                let excelFile = ''
+                let data = e.target.result;
+                // console.log("DATA", data)
+                excelFile = XLSX.read(data, {
+                    type: 'binary'
+                });
+                // console.log("EXCELPATH2", excelFile)
 
-            // dataTable1 += "</table></div></div></div>"
-            batchTable(str)
+                //展示所有表
+                // for(let i=0;i<excelFile.SheetNames.length;i++){
+                // 	　document.getElementById("excelFile").innerHTML +=excelFile.SheetNames[i]+"="+JSON.stringify(XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[i]]))+"<br/>";
+                // 　　　　　　}
 
-            obj.value = ''
-        }
-        excelFile =''
+                let dataTable1 = "";
+                //只展示第一個表
+                let headers = new Array();
+                let str = XLSX.utils.sheet_to_json(excelFile.Sheets[excelFile.SheetNames[0]])
+                // console.log("長度", str.length)
+                dataTable1 += "<table class='table table-striped table-lg'><tr>"
+                for (let key in str[0]) {
+                    headers.push(key)  //獲取表頭
+                    dataTable1 += "<th>" + key + "</th>"
+                }
+                dataTable1 += "</tr>"
+                // console.log(headers)
+                //顯示行數
+                for (let i = 0; i < str.length; i++) {
+                    // let json = JSON.stringify(str[i])
+                    dataTable1 += "<tr>"
+                    let json = str[i]
+                    for (let j = 0; j < headers.length; j++) {
+                        dataTable1 += "<td>" + json[headers[j]] + "</td>";
+                    }
+                    dataTable1 += "</tr>";
+                }
+
+                dataTable1 += "</table>"
+                document.getElementById("excelFile").innerHTML = dataTable1
+            }
+        })
     }
 
     function detailFormatter(value, row, index) {
         let str = ''
 
-        str += '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#a'+ row.data._strCOMMANDID +'">Details</button><div class="modal fade" id="a'+ row.data._strCOMMANDID +'" tabindex="-1" aria-labelledby="label_'+ row.data._strCOMMANDID +'" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title fs-3">Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">'
+        str += '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#a' + row.data._strCOMMANDID + '">Details</button><div class="modal fade" id="a' + row.data._strCOMMANDID + '" tabindex="-1" aria-labelledby="label_' + row.data._strCOMMANDID + '" aria-hidden="true"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title fs-3">Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">'
         str += '<table class="table table-striped table-sm"><thead><tr><th scope="col">#</th><th scope="col">Key</th><th scope="col">Result</th></tr></thead><tbody>',
-        Object.keys(row.data).forEach((key, index) => {
-            str += '<tr>'
-            str += `<td>${index+1}</td>`
-            str += `<td>${key}</td>`
-            if( key == '_message_body' ) {
-                str += `<td><xmp class="text-wrap">${row.data[key]}</xmp></td>`
-            }else{
-                str += `<td>${row.data[key]}</td>`
-            }
-            
-            str += '</tr>'
-        })
+            Object.keys(row.data).forEach((key, index) => {
+                str += '<tr>'
+                str += `<td>${index + 1}</td>`
+                str += `<td>${key}</td>`
+                if (key == '_message_body') {
+                    str += `<td><xmp class="text-wrap">${row.data[key]}</xmp></td>`
+                } else {
+                    str += `<td>${row.data[key]}</td>`
+                }
+
+                str += '</tr>'
+            })
         str += '</tbody></table></div></div></div></div>'
         return str
     }
@@ -363,7 +337,7 @@
         let newData = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || []
         $table.bootstrapTable('load', newData)
     }
-    
+
     $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
     idRefresh()
 
@@ -371,6 +345,7 @@
 
     let dataList = JSON.parse(localStorage.getItem('dataLogs_eqmove')) || [];
 
+    update()
 
 
     $('#receive_from_MES').click(
@@ -436,6 +411,7 @@
 
                     for (var i = 0, l = json_send.length; i < l; i++) {
                         for (var key in json_send[i]) {
+
                             console.log(key + ':' + json_send[i][key]);
                         }
                     }
